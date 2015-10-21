@@ -1,0 +1,143 @@
+/**
+ * styles.scss
+ * ---
+ * Main `sass` file. Import here `sass` files
+ */
+
+
+ /**
+  * Fonts
+  */
+ @import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
+
+ /**
+  * Variables
+  * ---
+  */
+
+ // variables
+ $font-family-base: "Karla", Helvetica, sans-serif;
+ // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+ $font-size-base: 18;
+ $line-height-base: 1.5;
+
+ $fs-menu: 18;
+ $fs-footer: 13;
+
+ $fs-archive-title: 18;
+ $fs-archive-subtitle: 13;
+
+ $fs-title: 26;
+ $fs-subtitle: 18;
+ $fs-credits: 15;
+
+
+ // colors
+ $text-color: #111;
+ $body-bg: #fff;
+ $selection-bg: #fff;
+ $selection-fg: lighten($text-color, 50%);
+
+// grid
+ $wrapper-width: 1280px;
+ $article-width: 1000px;
+
+ $padding-horizontal-base: 5px;
+ $padding-vertical-base: 5px;
+ $margin-horizontal-base: 5px;
+ $margin-vertical-base: 5px;
+ $margin-horizontal-large: 15px;
+ $margin-vertical-large: 15px;
+
+
+
+// Partials
+@import "partials/mixins";
+@import "partials/reset";
+@import "partials/wordpress";
+@import "partials/utils";
+@import "partials/print";
+
+
+@mixin inverted() {
+   background-color:$text-color; color:$body-bg; a { color:$body-bg; }
+}
+
+
+
+/**
+ * Base Layout
+ */
+.wrapper {
+  max-width: $wrapper-width;
+  padding: 0 $margin-horizontal-large;
+  margin: 0 auto;
+  position: relative;
+}
+
+// Header container
+.header {
+   $header-height: 150px;
+   height:$header-height;
+   .header-content { position:fixed; left:0; width:100%; height:$header-height; }
+   nav {
+      $underbar: 2px;
+      @include font-size($fs-menu);
+      font-weight: bold;
+      ul { list-style-type: none; padding:0; text-align: center; }
+      li { display: inline-block;
+         &:before { content:'— '; }
+         &:first-child:before { display:none; }
+         a { text-decoration:none; padding: 0 0.25em;
+            &:hover { @include inverted(); }
+         }
+         &.current-menu-item a { @include inverted(); }
+      }
+   }
+}
+
+.footer {
+   @include font-size($fs-footer);
+   text-align: center;
+   margin-top:60px;
+}
+
+body.archive {
+   section { display:flex; flex-wrap:wrap; justify-content:space-around; align-items:center; }
+   article {
+      display: inline-block;
+      margin-bottom: 10%;
+      margin-right: 2%;
+
+      .title { @include font-size($fs-archive-title);
+         .title-extra:before { content:"—"; }
+         margin:0;
+         margin-top:0.5em;
+      }
+      .subtitle { @include font-size($fs-archive-subtitle); font-weight:normal;
+         margin:0;
+         margin-top:0.2em;
+         p { margin:0; }
+      }
+      a { text-decoration: none; }
+      &:hover .title { @include inverted(); }
+      // &:hover img { outline: 7px inset $text-color; outline-offset:-7px; }
+      .title, .subtitle { text-align: center; }
+   }
+}
+
+
+body.single-works {
+   .title { @include font-size($fs-title); text-align: center; }
+   .subtitle { @include font-size($fs-subtitle); }
+
+   .images {
+      img { display:block; margin:0 auto; margin-top:60px; }
+   }
+   .text { width:$article-width; margin:0 auto; }
+   .credits { @include font-size($fs-credits); }
+}
+
+body.page {
+   article { width:$article-width; margin:0 auto; }
+}
