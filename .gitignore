@@ -1,4 +1,5 @@
 .DS_Store
 node_modules
-src/bower_components
+theme/_/bower_components
 .sass-cache
+ftp.config.json

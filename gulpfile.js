@@ -1,175 +1,236 @@
 /* jshint node: true */
 /* global $: true */
-"use strict";
+'use strict';
 
-var gulp = require( "gulp" ),
-	/** @type {Object} Loader of Gulp plugins from `package.json` */
-	$ = require( "gulp-load-plugins" )(),
-	/** @type {Array} JS source files to concatenate and uglify */
-	uglifySrc = [
-		/** Modernizr */
-		"src/bower_components/modernizr/modernizr.js",
-		/** Conditionizr */
-		"src/js/lib/conditionizr-4.3.0.min.js",
-		/** jQuery */
-		"src/bower_components/jquery/dist/jquery.js",
-		/** Page scripts */
-		"src/js/scripts.js"
-	],
-	/** @type {Object of Array} CSS source files to concatenate and minify */
-	cssminSrc = {
-		development: [
-			/** The banner of `style.css` */
-			"src/css/banner.css",
-			/** Theme style */
-			"src/css/style.css"
-		],
-		production: [
-			/** The banner of `style.css` */
-			"src/css/banner.css",
-			/** Normalize */
-			"src/bower_components/normalize.css/normalize.css",
-			/** Theme style */
-			"src/css/style.css"
-		]
-	},
-	/** @type {String} Used inside task for set the mode to 'development' or 'production' */
-	env = (function() {
-		/** @type {String} Default value of env */
-		var env = "development";
+/*
+   FIXME/TODO:
+   x css sourcemaps not working (they were not properly uploaded)
+   x only upload changed files
+   * css reload seems to happen before upload is finished -> check again. fix is in upload-styles
+   * allow multiple js files -> should be fixed?
+   * delete before deploy / or some kind of sync
+   * allow inserting bower dependencies via wiredep
+   * how to deal with base path being specified in .bowerrc?
+   * make this a repo
+   * switch to eslint
+   * option for ruby-sass
+   * compile sass on partial changes
+   * use mac notifications for errors
+ */
 
-		/** Test if there was a different value from CLI to env
-			Example: gulp styles --env=production
-			When ES6 will be default. `find` will replace `some`  */
-		process.argv.some(function( key ) {
-			var matches = key.match( /^\-{2}env\=([A-Za-z]+)$/ );
 
-			if ( matches && matches.length === 2 ) {
-				env = matches[1];
-				return true;
-			}
-		});
+ /**
+  *  initialization
+  */
+// read config files
+var config = require('./project.config.json');
+var ftpConfig = require(config.ftpConfig);
 
-		return env;
-	} ());
+// init gulp and plugins
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')({
+   pattern: ['gulp-*', 'gulp.*', 'browser-sync', 'main-bower-files', 'vinyl-ftp', 'uglify-save-license']
+});
+var joinPath = require('path').join;
 
-/** Clean */
-gulp.task( "clean", require( "del" ).bind( null, [ ".tmp", "dist" ] ) );
+// configure ftp
+ftpConfig.log = $.util.log;
+$.ftp = $.vinylFtp.create(ftpConfig);
 
-/** Copy */
-gulp.task( "copy", function() {
-	return gulp.src([
-			"src/*.{php,png,css}",
-			"src/modules/*.php",
-			"src/img/**/*.{jpg,png,svg,gif,webp,ico}",
-			"src/fonts/*.{woff,woff2,ttf,otf,eot,svg}",
-			"src/languages/*.{po,mo,pot}"
-		], {
-			base: "src"
-		})
-		.pipe( gulp.dest( "dist" ) );
+/**
+ *  utilities
+ */
+// common error handler vor gulp plugins
+var errorHandler = function(title) {
+  return function(err) {
+    $.util.log($.util.colors.red('[' + title + ']'), err.toString());
+    this.emit('end');
+  };
+};
+
+// get the src glob array from config
+// TODO: error handling
+var srcPath = function(name) {
+   var glob = config.paths[name]['src']; // could be an array of globs
+   if (!Array.isArray(glob)) {
+      glob = [glob];
+   }
+   return glob.map(function (el) {
+      return joinPath(config.basePath, el);
+   });
+};
+// get the dest path (string) from config (optionally appending and ext to the path)
+var destPath = function(name, ext) {
+   var path = config.paths[name]['dest']; // needs to be a string
+   ext = ext || '';
+   return joinPath(config.basePath, path, ext);
+};
+
+// console.log(srcPath('styles'));
+// console.log(destPath('styles', '*'));
+// process.exit();
+
+/**
+ *  JS / jshint, uglify, sourcemaps
+ */
+gulp.task('scripts', ['bower-scripts'], function() {
+   return gulp.src(srcPath('scripts') )
+      .pipe( $.jshint() )
+      .pipe( $.jshint.reporter('jshint-stylish') )
+      .pipe( $.sourcemaps.init() )
+      .pipe( $.uglify({ preserveComments: $.uglifySaveLicense })).on('error', errorHandler('Uglify') )
+      .pipe( $.rename({extname: '.min.js'}) )
+      .pipe( $.sourcemaps.write('.') )
+      .pipe( gulp.dest(destPath('scripts')) )
+      .pipe( $.size({title: "scripts:", showFiles: true}) );
 });
 
-/** CSS Preprocessors */
-gulp.task( "sass", function () {
-	return gulp.src( "src/css/sass/style.scss" )
-		.pipe( $.rubySass({
-			style: "expanded",
-			precision: 10
-		}))
-		.on( "error", function( e ) {
-			console.error( e );
-		})
-		.pipe( gulp.dest( "src/css" ) );
+gulp.task('bower-scripts', function() {
+   // TODO: minify before concat. only files that don't end in .min.js
+   var mainBowerFilesOptions = {
+      debugging: false,
+      includeDev: true,
+      checkExistence: true,
+      filter: "**/*.js"
+   };
+   return gulp.src( $.mainBowerFiles(mainBowerFilesOptions) )
+      .pipe( $.debug({title: "bower-scripts:"}) )
+      // .pipe($.sourcemaps.init())
+      .pipe( $.concat('vendor.js') )
+      .pipe( $.uglify({ preserveComments: $.uglifySaveLicense })).on('error', errorHandler('Uglify') )
+      // .pipe($.rename({extname: '.min.js'}))
+      // .pipe($.sourcemaps.write( '.' ))
+      .pipe( gulp.dest(destPath('scripts')) )
+      .pipe( $.size({title: "bower-scripts:", showFiles: true}) );
 });
 
-/** STYLES */
-gulp.task( "styles", [ "sass" ], function() {
-	console.log( "`styles` task run in `" + env + "` environment" );
-
-	var stream = gulp.src( cssminSrc[ env ] )
-		.pipe( $.concat( "style.css" ))
-		.pipe( $.autoprefixer( "last 2 version" ) );
-
-	if ( env === "production" ) {
-		stream = stream.pipe( $.csso() );
-	}
-
-	return stream.on( "error", function( e ) {
-			console.error( e );
-		})
-		.pipe( gulp.dest( "src" ) );
+gulp.task('upload-scripts', ['scripts'], function() {
+   var globs = srcPath('scripts'); // sources (glob array)
+   globs.push( destPath('scripts', '*')); // add dest folder
+   return gulp.src( globs, {base: config.basePath} )
+      .pipe( $.cached() ) // only pass through changed files
+      // .pipe( $.ftp.newerOrDifferentSize(ftpConfig.remoteBase) )
+      .pipe( $.ftp.dest(ftpConfig.remoteBase) )
+      .pipe( $.browserSync.stream({ once: true }) )
+      .pipe( $.size() );
 });
 
-/** JSHint */
-gulp.task( "jshint", function () {
-	/** Test all `js` files exclude those in the `lib` folder */
-	return gulp.src( "src/js/{!(lib)/*.js,*.js}" )
-		.pipe( $.jshint() )
-		.pipe( $.jshint.reporter( "jshint-stylish" ) )
-		.pipe( $.jshint.reporter( "fail" ) );
+
+
+/**
+ *  CSS / sass, autoprefixer, minify-css, sourcemaps, livereload
+ */
+gulp.task('styles', ['bower-styles'], function() {
+   var sassOptions = {
+      outputStyle: 'expanded'
+   };
+   return gulp.src( srcPath('styles') )
+   //  .pipe($.inject(injectFiles, injectOptions))
+   //  .pipe(wiredep(_.extend({}, conf.wiredep)))
+      .pipe( $.sourcemaps.init() )
+      .pipe( $.sass(sassOptions) ).on( 'error', errorHandler('Sass') )
+      .pipe( $.autoprefixer() ).on( 'error', errorHandler('Autoprefixer') )
+      .pipe( $.minifyCss() ).on( 'error', errorHandler('Minify CSS') )
+      .pipe( $.sourcemaps.write('.') )
+      .pipe( gulp.dest(destPath('styles')) )
+      .pipe( $.size({title: "styles:", showFiles: true}) );
 });
 
-/** Templates */
-gulp.task( "template", function() {
-	console.log( "`template` task run in `" + env + "` environment" );
-
-    var is_debug = ( env === "production" ? "false" : "true" );
-
-    return gulp.src( "src/dev-templates/is-debug.php" )
-        .pipe( $.template({ is_debug: is_debug }) )
-        .pipe( gulp.dest( "src/modules" ) );
+gulp.task('bower-styles', function() {
+   var mainBowerFilesOptions = {
+      debugging: false,
+      includeDev: true,
+      checkExistence: true,
+      filter: "**/*.css"
+   };
+   return gulp.src( $.mainBowerFiles(mainBowerFilesOptions) )
+      .pipe( $.debug({title: "bower-styles:"}) )
+      // .pipe($.sourcemaps.init())
+      .pipe( $.concat('vendor.css') )
+      .pipe( $.minifyCss() ).on( 'error', errorHandler('Minify CSS') )
+      // .pipe($.rename({extname: '.min.js'}))
+      // .pipe($.sourcemaps.write( '.' ))
+      .pipe( gulp.dest(destPath('styles')) )
+      .pipe( $.size({title: "bower-styles:", showFiles: true}) );
 });
 
-/** Uglify */
-gulp.task( "uglify", function() {
-	return gulp.src( uglifySrc )
-		.pipe( $.concat( "scripts.min.js" ) )
-		.pipe( $.uglify() )
-		.pipe( gulp.dest( "dist/js" ) );
+gulp.task('upload-styles', ['styles'], function() {
+   var globs = srcPath('styles'); // sources (glob array)
+   globs.push( destPath('styles', '*') ); // add everything in destination folder
+   return gulp.src( globs, {base: config.basePath} )
+      .pipe( $.cached() ) // only pass through changed files
+      .pipe( $.ftp.dest(ftpConfig.remoteBase) ).on('end', function(argument) {
+         // console.log("ALL UPLOADED");
+      })
+      // .pipe( $.ftp.newerOrDifferentSize(ftpConfig.remoteBase) )
+      .pipe( $.browserSync.stream({ once: true }) )
+      .pipe( $.size() );
 });
 
-/** `env` to 'production' */
-gulp.task( "envProduction", function() {
-	env = "production";
+
+
+/**
+ *  start the browsersync server
+ */
+gulp.task('browsersync', [], function() {
+   $.browserSync.init({
+      proxy: config.browserSyncProxy,
+      browser: config.browser
+   });
 });
 
-/** Livereload */
-gulp.task( "watch", [ "template", "styles", "jshint" ], function() {
-	var server = $.livereload();
 
-	/** Watch for livereoad */
-	gulp.watch([
-		"src/js/**/*.js",
-		"src/*.php",
-		"src/*.css"
-	]).on( "change", function( file ) {
-		console.log( file.path );
-		server.changed( file.path );
-	});
 
-	/** Watch for autoprefix */
-	gulp.watch( [
-		"src/css/*.css",
-		"src/css/sass/**/*.scss"
-	], [ "styles" ] );
+/**
+ *  build (compile all scripts & styles)
+ */
+gulp.task('build', ['scripts', 'styles']);
 
-	/** Watch for JSHint */
-	gulp.watch( "src/js/{!(lib)/*.js,*.js}", ["jshint"] );
+
+
+/**
+ *  watch styles & scripts (with livereload via browsersync)
+ */
+gulp.task('watch', ['browsersync', 'build'], function() {
+   // watch styles
+   gulp.watch( srcPath('styles'), ['styles', 'upload-styles'] );
+
+   // watch scripts
+   gulp.watch( srcPath('scripts'), ['scripts', 'upload-scripts']);
+
+   // watch templates etc.
+   gulp.watch( srcPath('templates'), function(event) {
+      gulp.src( event.path, {base: config.basePath} )
+         .pipe( $.cached() ) // only pass through changed files
+         .pipe( $.ftp.dest(ftpConfig.remoteBase) )
+         .pipe( $.browserSync.stream({ once: true }) )
+         .pipe( $.size() );
+      // browserSync.reload(event.path);
+   });
 });
 
-/** Build */
-gulp.task( "build", [
-	"envProduction",
-	"clean",
-	"template",
-	"styles",
-	"jshint",
-	"copy",
-	"uglify"
-], function () {
-	console.log("Build is finished");
+
+
+/**
+ *  deploy to ftp
+ */
+gulp.task('deploy', ['build'], function() {
+   // upload everything in base folder
+   var globs = [
+      config.basePath + '/**/*',
+      // '!' + config.basePath + '/bower_components/**/*'
+   ];
+   // TODO: fix paths beginning with !
+   // globs = globs.map(function(path) {
+   //    return joinPath(config.basePath, path);
+   // });
+   return gulp.src( globs, {base: config.basePath, buffer: false} )
+      .pipe( $.ftp.dest(ftpConfig.remoteBase) );
 });
 
-/** Gulp default task */
-gulp.task( "default", ["watch"] );
+
+
+/**
+ *  default task
+ */
+gulp.task('default', ['build']);

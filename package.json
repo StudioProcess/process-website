@@ -1,135 +1,36 @@
 {
-  "name": "HTML5Blank",
-  "description": "Powerful shell for rapidly deploying your WordPress projects",
+  "name": "prcs-website",
+  "description": "based on html5blank",
   "license": "MIT",
-  "version": "1.5.0",
+  "version": "0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toddmotto/html5blank.git"
+    "url": "https://github.com/martinleopold/prcs-website.git"
   },
-  "author": "Todd Motto",
-  "contributors": [
-    {
-      "name": "toddmotto",
-      "url": "https://github.com/toddmotto"
-    },
-    {
-      "name": "J-Rabe",
-      "url": "https://github.com/J-Rabe"
-    },
-    {
-      "name": "scottaohara",
-      "url": "https://github.com/scottaohara"
-    },
-    {
-      "name": "Munnday",
-      "url": "https://github.com/Munnday"
-    },
-    {
-      "name": "FreDeRoover",
-      "url": "https://github.com/FreDeRoover"
-    },
-    {
-      "name": "beat84",
-      "url": "https://github.com/beat84"
-    },
-    {
-      "name": "floq-design",
-      "url": "https://github.com/floq-design"
-    },
-    {
-      "name": "georgestephanis",
-      "url": "https://github.com/georgestephanis"
-    },
-    {
-      "name": "oriSomething",
-      "url": "https://github.com/oriSomething"
-    },
-    {
-      "name": "itsduc",
-      "url": "https://github.com/itsduc"
-    },
-    {
-      "name": "alorence",
-      "url": "https://github.com/alorence"
-    },
-    {
-      "name": "elkebirmed",
-      "url": "https://github.com/elkebirmed"
-    },
-    {
-      "name": "lregla",
-      "url": "https://github.com/lregla"
-    },
-    {
-      "name": "staceycordoni",
-      "url": "https://github.com/staceycordoni"
-    },
-    {
-      "name": "cle-ment",
-      "url": "https://github.com/cle-ment"
-    },
-    {
-      "name": "fxbenard",
-      "url": "https://github.com/fxbenard"
-    },
-    {
-      "name": "CoeusCC",
-      "url": "https://github.com/CoeusCC"
-    },
-    {
-      "name": "ssteinerx",
-      "url": "https://github.com/ssteinerx"
-    },
-    {
-      "name": "matchboxhq",
-      "url": "https://github.com/matchboxhq"
-    },
-    {
-      "name": "chrisdl",
-      "url": "https://github.com/chrisdl"
-    },
-    {
-      "name": "toxicdog",
-      "url": "https://github.com/toxicdog"
-    },
-    {
-      "name": "grischka",
-      "url": "https://github.com/grischka"
-    },
-    {
-      "name": "fanuneza",
-      "url": "https://github.com/fanuneza"
-    },
-    {
-      "name": "anthonycreek",
-      "url": "https://github.com/anthonycreek"
-    },
-    {
-      "name": "Grsmto",
-      "url": "https://github.com/Grsmto"
-    },
-    {
-      "name": "weslleih",
-      "url": "https://github.com/weslleih"
-    }
-  ],
-  "dependencies": {},
+  "author": "Martin Leopold",
   "devDependencies": {
-    "del": "^0.1.2",
+    "browser-sync": "^2.9.11",
     "gulp": "^3.6.0",
     "gulp-autoprefixer": "^0.0.7",
+    "gulp-cached": "^1.1.0",
     "gulp-concat": "^2.3.4",
-    "gulp-csso": "^0.2.9",
+    "gulp-debug": "^2.1.2",
     "gulp-jshint": "^1.8.4",
-    "gulp-livereload": "^1.2.0",
     "gulp-load-plugins": "^0.5.0",
-    "gulp-ruby-sass": "^0.7.1",
-    "gulp-template": "^1.0.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.4",
+    "gulp-size": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.0.0",
-    "jshint-stylish": "^0.4.0"
+    "gulp-util": "^3.0.6",
+    "jshint-stylish": "^0.4.0",
+    "main-bower-files": "^2.9.0",
+    "uglify-save-license": "^0.4.1",
+    "vinyl-ftp": "^0.4.5"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": "^4.2.1",
+    "npm": "^3.3.8"
   }
 }

@@ -1,0 +1,21 @@
+{
+	"browserSyncProxy" : "http://process.martinleopold.com",
+	"browser" : "google chrome",
+	"ftpConfig" : "./ftp.config.json",
+	"wwwBase": "wp-content/themes/rkstudio/",
+	"basePath" : "theme/",
+	"paths" : {
+		"templates" : {
+			"src" : ["./*", "!.*"],
+			"dest" : "./"
+		},
+		"styles" : {
+			"src" : "_/styles/*.scss",
+			"dest" : "_/styles/dist/"
+		},
+		"scripts" : {
+			"src" : "_/scripts/*.js",
+			"dest" : "_/scripts/dist/"
+		}
+	}
+}

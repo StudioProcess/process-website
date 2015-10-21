@@ -2,9 +2,14 @@
   "name": "HTML5Blank",
   "version": "1.5.0",
   "author": "Todd Motto",
-  "devDependencies": {
+  "dependencies": {
     "jquery": "~1.11.1",
     "modernizr": "~2.8.3",
     "normalize.css": "~3.0.1"
+  },
+  "overrides": {
+     "modernizr": {
+        "main": "modernizr.js"
+     }
   }
 }
