@@ -20,6 +20,7 @@
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
  $font-size-base: 18;
  $line-height-base: 1.5;
+ $line-height-credits: 1.4;
 
  $fs-menu: 18;
  $fs-footer: 13;
@@ -75,25 +76,25 @@
   position: relative;
 }
 
-// Header container
-.header {
-   $header-height: 150px;
+.header { // Header container
+   $header-height: 70px;
    height:$header-height;
    .header-content { position:fixed; left:0; width:100%; height:$header-height; }
-   nav {
-      $underbar: 2px;
-      @include font-size($fs-menu);
-      font-weight: bold;
-      ul { list-style-type: none; padding:0; text-align: center; }
-      li { display: inline-block;
-         &:before { content:'— '; }
-         &:first-child:before { display:none; }
-         a { text-decoration:none; padding: 0 0.25em;
-            &:hover { @include inverted(); }
-         }
-         &.current-menu-item a { @include inverted(); }
-      }
-   }
+
+     nav {
+        @include font-size($fs-menu);
+        font-weight: bold;
+        ul { list-style-type: none; padding:0; text-align: center; }
+        li { display: inline-block;
+          &:before { content:'— '; }
+          &:first-child:before { display:none; }
+          a { text-decoration:none; padding: 0 0.25em;
+              &:hover { @include inverted(); }
+          }
+          &.current-menu-item a { @include inverted(); }
+        }
+  }
+
 }
 
 .footer {
@@ -102,7 +103,18 @@
    margin-top:60px;
 }
 
-body.archive {
+
+// hide all images for js fade-in
+html.js {
+   img { visibility:hidden; }
+}
+
+
+
+/**
+ * HOME Page / WORKS Archive
+ */
+body.home, body.archive {
    section { display:flex; flex-wrap:wrap; justify-content:space-around; align-items:center; }
    article {
       display: inline-block;
@@ -126,18 +138,68 @@ body.archive {
    }
 }
 
-
+/**
+ * Single WORK
+ */
 body.single-works {
    .title { @include font-size($fs-title); text-align: center; }
-   .subtitle { @include font-size($fs-subtitle); }
+   .subtitle { @include font-size($fs-subtitle); text-align: center; }
 
    .images {
       img { display:block; margin:0 auto; margin-top:60px; }
    }
-   .text { width:$article-width; margin:0 auto; }
-   .credits { @include font-size($fs-credits); }
+   .text {
+     width: 100%;
+     max-width:$article-width; margin:0 auto; }
+   .credits {
+     @include font-size($fs-credits);
+     line-height: $line-height-credits;
+     width: 100%;
+     max-width:$article-width; margin:0 auto;
+
+    }
+}
+
+.big-text{
+  @include font-size($fs-title);
+  width: 100%;
+  max-width:$article-width;
+  margin-top: 0.67em;
+  margin-right: 0px;
+  margin-bottom: 0.67em;
+  margin-left: 0px;
+}
+body.post-2{
+  margin-top: 50px;
 }
 
 body.page {
-   article { width:$article-width; margin:0 auto; }
+   article { width: 100%;
+   max-width:$article-width; margin:0 auto; }
+
+   @media (min-width: 600px) {
+     // two columns layout
+     .items {
+     	display: flex;
+     	flex-wrap: wrap;
+      padding-top: 20px;
+     	margin-left: -30px;
+     	margin-top: -30px;
+     }
+     .items img {
+      margin-top: 50px;
+     }
+     .items .item {
+     	flex: 1 0 calc(25% - 10px);
+     	margin: 30px;
+     }
+  }
+  @media (max-width: 599px) {
+    // two columns layout
+    .items img {
+     margin-top: 50px;
+    }
+    .items .item {
+    }
+ }
 }

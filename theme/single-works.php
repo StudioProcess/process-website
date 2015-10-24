@@ -28,7 +28,9 @@
 			<?php echo types_render_field('credits', array()); ?>
 			</section>
 
+			<section class="credits">
 			<?php edit_post_link(); // Always handy to have Edit Post Links available ?>
+			</section>
 
 		</article>
 		<!-- /article -->

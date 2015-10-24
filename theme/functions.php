@@ -7,6 +7,7 @@
 
 
 require_once "_/modules/is-debug.php";
+require_once "_/modules/sync.php";
 
 /*------------------------------------*\
     External Modules/Files
@@ -302,18 +303,16 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 add_action("pre_get_posts", "prcs_custom_front_page");
 function prcs_custom_front_page($wp_query) {
 	if (is_admin()) return;
-
-    if ( is_front_page() ) {
-        $wp_query->set('post_type', array('works'));
-        $wp_query->set('page_id', ''); // empty page id
-
-        // fix conditional fucntions like is_front_page or is_single ect
-        $wp_query->is_page = 0;
-        $wp_query->is_singular = 0;
-        $wp_query->is_home = 0;
-        $wp_query->is_front_page = 1;
-        $wp_query->is_post_type_archive = 0;
-        $wp_query->is_archive = 1;
+   if ( $wp_query->is_front_page() && $wp_query->is_main_query() ) {
+      $wp_query->set('post_type', array('works'));
+      // $wp_query->set('page_id', ''); // empty page id
+      // fix conditional fucntions like is_front_page or is_single ect
+      $wp_query->is_front_page = 1;
+      $wp_query->is_home = 1;
+      // $wp_query->is_archive = 1;
+      // $wp_query->is_post_type_archive = 1;
+      // $wp_query->is_page = 0;
+      // $wp_query->is_singular = 0;
     }
 }
 
@@ -338,4 +337,76 @@ function prcs_rnd_margins($min, $max, $steps) {
    $top  = $min + rand(0, $steps+1) * $step_size;
    $left = $min + rand(0, $steps+1) * $step_size;
    return 'margin-top:' . $top . '%; margin-left:' . $left . '%; ';
+}
+
+function prcs_time_ago($ptime) {
+    $etime = time() - $ptime;
+    if ($etime < 1){
+        return '0 seconds';
+    }
+    $a = array( 365 * 24 * 60 * 60  =>  'year',
+                 30 * 24 * 60 * 60  =>  'month',
+                      24 * 60 * 60  =>  'day',
+                           60 * 60  =>  'hour',
+                                60  =>  'minute',
+                                 1  =>  'second'
+                );
+    $a_plural = array( 'year'   => 'years',
+                       'month'  => 'months',
+                       'day'    => 'days',
+                       'hour'   => 'hours',
+                       'minute' => 'minutes',
+                       'second' => 'seconds'
+                );
+    foreach ($a as $secs => $str){
+        $d = $etime / $secs;
+        if ($d >= 1){
+            $r = round($d);
+            return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
+        }
+    }
+}
+
+
+/*------------------------------------*\
+   Social Posts
+\*------------------------------------*/
+
+function prcs_should_insert_social($idx, $num_insert, $num_base, $offset=0.5) {
+   $num_total = $num_insert + $num_base;
+   $step = $num_total / $num_insert;
+   if ($idx > $num_total-1) return false; // it's an error case
+   // check if idx is in the insert list
+   $insert_idx = 0;
+   $n = 0;
+   do {
+      $insert_idx = floor($n * $step + $offset);
+      if ($insert_idx == $idx) return true;
+      $n++;
+   } while ($insert_idx < $idx);
+   return false;
+}
+
+// compare timestamps of two social post objects. for sorting
+function prcs_compare_timestamps($obj1, $obj2) {
+   $t1 = $obj1->timestamp;
+   $t2 = $obj2->timestamp;
+   if ($t1 == $t2) return 0;
+   return ($t1 > $t2) ? -1 : 1; // sort DESC
+}
+
+// get a number of social posts from the database.
+function prcs_get_social_posts($count) {
+   $posts = array_merge(
+      PrcsSync::get_instagram_posts($count),
+      PrcsSync::get_twitter_posts($count)
+   );
+   usort($posts, 'prcs_compare_timestamps');
+   return array_slice($posts, 0, $count);
+}
+
+function debug($thing) {
+  echo '<pre>';
+  print_r($thing);
+  echo '</pre>';
 }
