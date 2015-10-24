@@ -5,11 +5,12 @@
   "dependencies": {
     "jquery": "~1.11.1",
     "modernizr": "~2.8.3",
-    "normalize.css": "~3.0.1"
+    "normalize.css": "~3.0.1",
+    "imagesloaded": "~3.1.8"
   },
   "overrides": {
-     "modernizr": {
-        "main": "modernizr.js"
-     }
+    "modernizr": {
+      "main": "modernizr.js"
+    }
   }
 }
