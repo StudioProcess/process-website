@@ -1,23 +1,15 @@
 <?php
+include 'sync_pw.php'; // credentials
 
-class PrcsSync {
+class PrcsSync extends PrcsCredentials {
    const DEBUG = false; // show debug output and errors
-
-   const SQL_SERVER = 'localhost';
-   const SQL_DB = 'usr_web192_3';
-   const SQL_USER = 'web192';
-   const SQL_PASS = 'H62-NZQ-Wdw-fxW';
 
    const TABLE_OPTIONS = 'sync_options';
    const TABLE_INSTAGRAM = 'sync_instagram_posts';
    const TABLE_TWITTER = 'sync_twitter_posts';
 
    const IG_URL = 'https://api.instagram.com/v1/users/2227354795/media/recent';
-   const IG_CLIENT_ID = '6b35de392b314372a6f44f6e37f5c3ab';
-
    const TWI_URL = 'https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=3439338467';
-   const TWI_KEY = 'wNiR0QhpOwwpDdO0YLwE32GG7';
-   const TWI_SECRET = 'CGk3S0lVrUjhdMy4Es92ojzIO0RjfAHAi6ztcT7Eh5b7Yinlz9';
 
    const TAG = 'studioprocess';
 
