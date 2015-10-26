@@ -138,6 +138,18 @@ body.home, body.archive {
    }
 }
 
+
+/**
+ * Social Posts
+ */
+body.home, body.archive {
+   article.instagram {
+      max-width:500px;
+   }
+}
+
+
+
 /**
  * Single WORK
  */
