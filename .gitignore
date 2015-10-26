@@ -3,5 +3,4 @@ node_modules
 theme/_/bower_components
 .sass-cache
 ftp.config.json
-
 theme/_/modules/sync_pw.php
