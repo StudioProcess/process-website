@@ -4,7 +4,7 @@
 		<!-- section -->
 		<section>
 
-			<?php PrcsSync::sync(); // TODO: this takes too long
+			<?php //PrcsSync::sync(); // TODO: this takes too long
 			$social_posts = prcs_get_social_posts(40);
 			$num_social = sizeof($social_posts);
 			$num_works = $wp_query->found_posts;
