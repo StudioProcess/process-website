@@ -77,7 +77,9 @@ class PrcsSync {
 
       $query = "BEGIN;" . PHP_EOL; // begin transaction
       // delete posts that are in db but missing from new data
-      $query .= sprintf( "DELETE FROM %s WHERE id > '%s' AND id NOT IN (%s);" . PHP_EOL, $table, $min_id, join(',', $ids) );
+      // TODO : need to sync back a certain time so i have a real min id i can start from looking for deletions
+      // $query .= sprintf( "DELETE FROM %s WHERE id > '%s' AND id NOT IN (%s);" . PHP_EOL, $table, $min_id, join(',', $ids) );
+      $query .= sprintf( "DELETE FROM %s WHERE id NOT IN (%s);" . PHP_EOL, $table, join(',', $ids) );
       // add or update all posts and track new last_id
       $insert = "INSERT INTO %s VALUES ('%s', %d, '%s') ON DUPLICATE KEY UPDATE id='%2\$s', timestamp=%3\$d, content='%4\$s'; " . PHP_EOL;
       $last_id = '';
@@ -254,6 +256,7 @@ class PrcsSync {
       // self::debug($last_id);
       //
       $response = self::twi_query(); // get twitter data
+      if ( empty($response) ) return;
       $posts = array();
       foreach ($response as $post) {
          self::debug($post);
@@ -311,6 +314,7 @@ class PrcsSync {
       // self::debug($last_id);
       $response = self::ig_query(); // get twitter data
       $posts = array();
+      if ( empty($response) ) return;
       foreach ($response->data as $post) {
          if ( self::ig_is_tagged($post) ) $posts[] = self::ig_format_for_db($post);
       }
@@ -329,7 +333,7 @@ class PrcsSync {
    private static function ig_format_for_db($post) {
       return (object)array(
          'id' => $post->id,
-         'timestamp' => self::to_timestamp($post->created_time),
+         'timestamp' => $post->created_time,
          'content' => json_encode($post)
       );
    }
@@ -392,7 +396,7 @@ class PrcsSync {
       // $db = self::db_connect();
       // self::twi_sync($db);
       // self::db_disconnect($db);
-      //
+
       // self::debug( self::get_instagram_posts() );
       // self::debug( self::get_instagram_posts() );
 
