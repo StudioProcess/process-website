@@ -3,7 +3,7 @@
 
 				<!-- copyright -->
 				<p class="copyright">
-					<img src="http://process.martinleopold.com/wp-content/uploads/2015/10/process-p.png" width="18px">
+					<img src="/wp-content/uploads/2015/10/process-p.png" width="18px">
 				</p>
 				<!-- /copyright -->
 

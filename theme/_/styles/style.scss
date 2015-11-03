@@ -81,7 +81,7 @@
    height:$header-height;
    .header-content { position:fixed; left:0; width:100%; height:$header-height; }
 
-     nav {
+     nav { z-index: 9999;
         @include font-size($fs-menu);
         font-weight: bold;
         ul { list-style-type: none; padding:0; text-align: center; }
@@ -160,6 +160,7 @@ body.single-works {
    .images {
       img { display:block; margin:0 auto; margin-top:60px; }
    }
+   .vimeo-outer { margin:0 auto; margin-top:60px; }
    .text {
      width: 100%;
      max-width:$article-width; margin:0 auto; }
@@ -168,7 +169,6 @@ body.single-works {
      line-height: $line-height-credits;
      width: 100%;
      max-width:$article-width; margin:0 auto;
-
     }
 }
 

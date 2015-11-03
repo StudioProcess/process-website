@@ -410,3 +410,43 @@ function debug($thing) {
   print_r($thing);
   echo '</pre>';
 }
+
+/*------------------------------------*\
+   Video Embedding
+\*------------------------------------*/
+// [bartag foo="foo-value"]
+function prcs_vimeo_shortcode( $atts ) {
+   // print_r($atts);
+   $a = shortcode_atts( array(
+     'width' => '640',
+     'height' => '360',
+     'autoplay' => '0',
+     'loop' => '0'
+   ), $atts );
+   $id = $atts[0];
+   if ( empty($id) ) return '';
+   $autoplay = $a['autoplay'] == '0' || strtolower( $a['autoplay'] ) == 'false' ? 0 : 1;
+   $loop = $a['loop'] == '0' || strtolower( $a['loop'] ) == 'false' ? 0 : 1;
+   $video_url = sprintf(
+      '//player.vimeo.com/video/%s?autoplay=%s&badge=0&byline=0&color=cccccc&loop=%s&portrait=0&title=1',
+      $id,
+      $autoplay,
+      $loop
+   );
+   $width = intval($a['width']);
+   $height = intval($a['height']);
+   $aspect = $height / $width * 100;
+
+   $out = '';
+   $out .= sprintf('<div class="vimeo-outer" style="max-width:%spx;">', $width);
+   $out .= sprintf('<div class="vimeo-inner" style="position:relative; width:100%%; padding-top:%s%%">', $aspect);
+   $out .= sprintf(
+   '<iframe class="vimeo" src="%s" width="100%%" height="100%%" style="position:absolute; top:0; left:0;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' . PHP_EOL,
+      $video_url
+   );
+   $out .= '</div>';
+   $out .= '</div>';
+
+   return $out;
+}
+add_shortcode( 'vimeo', 'prcs_vimeo_shortcode' );
