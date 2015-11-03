@@ -32,6 +32,8 @@
  $fs-subtitle: 18;
  $fs-credits: 15;
 
+ $fs-tweet: 18;
+
 
  // colors
  $text-color: #111;
@@ -145,6 +147,19 @@ body.home, body.archive {
 body.home, body.archive {
    article.instagram {
       max-width:500px;
+      .subtitle {
+        margin-top:0.7em;
+      }
+      .subtitle2 {
+        margin-top:0.5em;
+      }
+   }
+   article.twitter {
+     .tweet {
+       @include font-size($fs-tweet);
+       font-style: italic;
+       font-weight: bold;
+     }
    }
 }
 

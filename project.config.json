@@ -1,5 +1,5 @@
 {
-	"browserSyncProxy" : "http://process.martinleopold.com",
+	"browserSyncProxy" : "http://process.studio",
 	"browser" : "google chrome",
 	"ftpConfig" : "./ftp.config.json",
 	"wwwBase": "wp-content/themes/rkstudio/",
