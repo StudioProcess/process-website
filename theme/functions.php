@@ -334,9 +334,9 @@ function prcs_thumbnail_data($size) {
 function prcs_rnd_margins($min, $max, $steps) {
    if ($steps < 1) $steps = 1;
    $step_size = ($max - $min) / $steps;
-   $top  = $min + rand(0, $steps+1) * $step_size;
-   $left = $min + rand(0, $steps+1) * $step_size;
-   return 'margin-top:' . $top . '%; margin-left:' . $left . '%; ';
+   $top  = $min + rand(0, $steps) * $step_size;
+   $left = $min + rand(0, $steps) * $step_size;
+   return 'margin-top:' . $top . '%; margin-top:' . $top . 'vw; margin-left:' . $left . '%; ';
 }
 
 function prcs_time_ago($ptime) {

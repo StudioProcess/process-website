@@ -121,6 +121,7 @@ body.home, body.archive {
    article {
       display: inline-block;
       margin-bottom: 10%;
+      margin-bottom: 10vw;
       margin-right: 2%;
 
       .title { @include font-size($fs-archive-title);
@@ -159,6 +160,7 @@ body.home, body.archive {
        @include font-size($fs-tweet);
        font-style: italic;
        font-weight: bold;
+       text-align: center;
      }
    }
 }
