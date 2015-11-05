@@ -33,15 +33,6 @@ class PrcsSync extends PrcsCredentials {
       if (!empty($db->error)) self::debug($db->error);
    }
 
-   private static function db_next_result($db) {
-      if ( $db->more_results() ) {
-         $db->next_result();
-         return true;
-      } else {
-         return false;
-      }
-   }
-
    // process results of a multi_query
    private static function db_process_results($db) {
       self::db_errors($db);
@@ -52,7 +43,7 @@ class PrcsSync extends PrcsCredentials {
          } else {
             self::db_errors($db);
          }
-      } while ( self::db_next_result($db) );
+      } while ( $db->more_results() && $db->next_result() );
    }
 
    // create the necessary tables if they don't exist
