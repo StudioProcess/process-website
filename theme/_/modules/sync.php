@@ -2,7 +2,7 @@
 include 'sync_pw.php'; // credentials
 
 class PrcsSync extends PrcsCredentials {
-   const DEBUG = false; // show debug output and errors
+   private static $debug = false;
 
    const TABLE_OPTIONS = 'sync_options';
    const TABLE_INSTAGRAM = 'sync_instagram_posts';
@@ -33,6 +33,15 @@ class PrcsSync extends PrcsCredentials {
       if (!empty($db->error)) self::debug($db->error);
    }
 
+   private static function db_next_result($db) {
+      if ( $db->more_results() ) {
+         $db->next_result();
+         return true;
+      } else {
+         return false;
+      }
+   }
+
    // process results of a multi_query
    private static function db_process_results($db) {
       self::db_errors($db);
@@ -43,7 +52,7 @@ class PrcsSync extends PrcsCredentials {
          } else {
             self::db_errors($db);
          }
-      } while ( $db->next_result() );
+      } while ( self::db_next_result($db) );
    }
 
    // create the necessary tables if they don't exist
@@ -149,9 +158,10 @@ class PrcsSync extends PrcsCredentials {
       $date = new DateTime($str);
       return $date->getTimestamp();
    }
+
     // debug print something
     private static function debug($thing) {
-      if (!self::DEBUG) return;
+      if (!self::$debug) return;
       echo '<pre>';
       print_r($thing);
       echo '</pre>';
@@ -351,6 +361,12 @@ class PrcsSync extends PrcsCredentials {
    /**
     * PUBLIC API
     */
+
+    // enable/disable debug output
+    public static function set_debug($bool) {
+      self::$debug = $bool;
+    }
+
    // get new posts from instagram and twitter and store in db
    public static function sync() {
       $db = self::db_connect();
