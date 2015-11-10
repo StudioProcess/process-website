@@ -450,3 +450,41 @@ function prcs_vimeo_shortcode( $atts ) {
    return $out;
 }
 add_shortcode( 'vimeo', 'prcs_vimeo_shortcode' );
+
+
+/*------------------------------------*\
+   Metadata
+\*------------------------------------*/
+function prcs_schemaorg_publisher_extra_tags( $metatags ) {
+    // Organization Postal Address
+    $metatags[] = '<!-- Scope BEGIN: Organization Postal Address -->';
+    $metatags[] = '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+    $metatags[] = '<meta itemprop="streetAddress" content="Florianigasse 50/1/5" />';
+    $metatags[] = '<meta itemprop="postalCode" content="1080" />';
+    $metatags[] = '<meta itemprop="addressLocality" content="Vienna, Austria" />';
+    $metatags[] = '</span> <!-- Scope END: Organization Postal Address -->';
+
+    return $metatags;
+}
+add_filter( 'amt_schemaorg_publisher_extra', 'prcs_schemaorg_publisher_extra_tags' );
+
+function prc_metatags_filter( $metatags ) {
+    //var_dump($metatags);
+    $exclude = array('article:author', 'author');
+    // New array to hold the modified meta tags
+    $metatags_new = array();
+    foreach ( $metatags as $metatag ) {
+      $skip = false;
+      foreach ( $exclude as $ex ) {
+         if ( strpos($metatag, $ex) !== false ) {
+            $skip = true;
+            break;
+         }
+      }
+      if (!$skip) {
+         $metatags_new[] = $metatag;
+      }
+    }
+    return $metatags_new;
+}
+add_filter( 'amt_metadata_head', 'prc_metatags_filter' );
