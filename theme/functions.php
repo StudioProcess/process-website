@@ -239,7 +239,7 @@ function html5blankgravatar ($avatar_defaults)
 
 // Add Actions
 add_action('init', 'html5blank_header_scripts'); // Add Custom Scripts to wp_head
-add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
+// add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
@@ -276,8 +276,8 @@ add_filter('image_send_to_editor', 'remove_width_attribute', 10 ); // Remove wid
 remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
 
 // Shortcodes
-add_shortcode('html5_shortcode_demo', 'html5_shortcode_demo'); // You can place [html5_shortcode_demo] in Pages, Posts now.
-add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [html5_shortcode_demo_2] in Pages, Posts now.
+// add_shortcode('html5_shortcode_demo', 'html5_shortcode_demo'); // You can place [html5_shortcode_demo] in Pages, Posts now.
+// add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [html5_shortcode_demo_2] in Pages, Posts now.
 
 // Shortcodes above would be nested like this -
 // [html5_shortcode_demo] [html5_shortcode_demo_2] Here's the page title! [/html5_shortcode_demo_2] [/html5_shortcode_demo]
@@ -488,3 +488,17 @@ function prc_metatags_filter( $metatags ) {
     return $metatags_new;
 }
 add_filter( 'amt_metadata_head', 'prc_metatags_filter' );
+
+function prc_metatags_filter2( $metatags ) {
+   if (!is_front_page) return $metatags;
+
+   foreach ( $metatags as $metatag ) {
+      if ( strpos($metatag, 'og:title') !== false || strpos($metatag, 'twitter:title') !== false) {
+         $metatags_new[] = str_replace('Studio ', '', $metatag);
+      } else {
+         $metatags_new[] = $metatag;
+      }
+    }
+    return $metatags_new;
+}
+add_filter( 'amt_metadata_head', 'prc_metatags_filter2' );
