@@ -322,11 +322,21 @@ function prcs_custom_front_page($wp_query) {
 }
 
 
-add_action("pre_get_posts", "prcs_hidden_posts");
-function prcs_hidden_posts($wp_query) {
+// add_action("pre_get_posts", "prcs_hidden_posts");
+// function prcs_hidden_posts($wp_query) {
+// 	if (is_admin()) return;
+//    if ( $wp_query->is_main_query() && !$wp_query->is_single) {
+//       $wp_query->set( 'post__not_in', array(280, 310) );
+//     }
+// }
+
+
+// hide posts with 'hidden' tag (except in single view)
+add_action("pre_get_posts", "prcs_hidden_tag");
+function prcs_hidden_tag($wp_query) {
 	if (is_admin()) return;
    if ( $wp_query->is_main_query() && !$wp_query->is_single) {
-      $wp_query->set( 'post__not_in', array(280) );
+      $wp_query->set( 'tag__not_in', array(3) ); // 'hidden' tag
     }
 }
 
