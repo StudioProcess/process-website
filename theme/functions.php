@@ -300,6 +300,11 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 }
 
 
+/*------------------------------------*\
+    Custom functions
+\*------------------------------------*/
+
+// alter loop for custom front page
 add_action("pre_get_posts", "prcs_custom_front_page");
 function prcs_custom_front_page($wp_query) {
 	if (is_admin()) return;
@@ -313,12 +318,19 @@ function prcs_custom_front_page($wp_query) {
       // $wp_query->is_post_type_archive = 1;
       // $wp_query->is_page = 0;
       // $wp_query->is_singular = 0;
+      $wp_query->set( 'post__not_in', array(280) );
     }
 }
 
-/*------------------------------------*\
-    Custom functions
-\*------------------------------------*/
+
+add_action("pre_get_posts", "prcs_hidden_posts");
+function prcs_hidden_posts($wp_query) {
+	if (is_admin()) return;
+   if ( $wp_query->is_main_query() && !$wp_query->is_single) {
+      $wp_query->set( 'post__not_in', array(280) );
+    }
+}
+
 
 function prcs_thumbnail_data($size) {
    $id = get_post_thumbnail_id();
