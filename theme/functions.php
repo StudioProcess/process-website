@@ -318,7 +318,6 @@ function prcs_custom_front_page($wp_query) {
       // $wp_query->is_post_type_archive = 1;
       // $wp_query->is_page = 0;
       // $wp_query->is_singular = 0;
-      $wp_query->set( 'post__not_in', array(280) );
     }
 }
 
