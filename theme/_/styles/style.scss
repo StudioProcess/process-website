@@ -147,7 +147,10 @@ body.home, body.archive {
  */
 body.home, body.archive {
    article.instagram {
-      max-width:500px;
+      max-width:380px;
+      -webkit-transition: opacity .25s, filter .25s linear;
+      -webkit-filter: opacity(80%) grayscale(100%);
+
       .subtitle {
         margin-top:0.7em;
       }
@@ -155,6 +158,11 @@ body.home, body.archive {
         margin-top:0.5em;
       }
    }
+   article.instagram:hover {
+     -webkit-transition: opacity .25s, filter .25s linear;
+     -webkit-filter: opacity(100%) grayscale(0%);
+   }
+
    article.twitter {
      .tweet {
        @include font-size($fs-tweet);
@@ -163,6 +171,7 @@ body.home, body.archive {
        text-align: center;
      }
    }
+
    article.featured {
      margin: 0;
    }
