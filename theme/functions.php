@@ -341,14 +341,29 @@ function prcs_hidden_tag($wp_query) {
 }
 
 
-function prcs_thumbnail_data($size) {
+function prcs_thumbnail_data($size = 'medium') {
    $id = get_post_thumbnail_id();
-   $img = wp_get_attachment_image_src( $id, 'medium' );
+   $img = wp_get_attachment_image_src( $id, $size );
+   $mime = get_post_mime_type($id);
    $scale = intval( types_render_field('thumbnail-scale' , array()) ) / 100;
+
+   $html = "";
+   if ($mime == "image/gif") {
+      $gif = wp_get_attachment_image_src( $id, 'full' );
+      $img[0] = $gif[0];
+      $html = wp_get_attachment_image($id, 'full');
+   } else {
+      $html = wp_get_attachment_image($id, $size);
+   }
+
    if ($scale == 0) $scale = 1;
-   $img[1] *= $scale;
-   $img[2] *= $scale;
-   return $img;
+   return array(
+      "url" => $img[0],
+      "width" => $img[1] *= $scale,
+      "height" => $img[2] *= $scale,
+      "mime" => $mime,
+      "html" => $html
+   );
 }
 
 // srand(0);
