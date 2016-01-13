@@ -154,7 +154,8 @@ body.home, body.archive {
    article.instagram {
       max-width:380px;
       -webkit-transition: opacity .25s, filter .25s linear;
-      -webkit-filter: opacity(80%) grayscale(100%);
+      -webkit-filter: opacity(30%) grayscale(100%);
+      z-index: 0;
 
       .subtitle {
         margin-top:0.7em;
