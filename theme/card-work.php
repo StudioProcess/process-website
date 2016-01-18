@@ -1,7 +1,7 @@
    <?php if ( has_post_thumbnail()) {
       $img_scale = 1;
       $img = prcs_thumbnail_data('medium');
-      $style_width = 'width:' . $img["width"]*$img_scale . 'px; ';
+      $style_width = 'max-width:' . $img["width"]*$img_scale . 'px; ';
       $style_margins = prcs_rnd_margins(0, 10, 5);
       // print_r($img);
    } ?>
