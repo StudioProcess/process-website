@@ -204,7 +204,12 @@ body.single-works {
      line-height: $line-height-credits;
      width: 100%;
      max-width:$article-width; margin:0 auto;
+     a {
+       text-decoration: none;
+       border-bottom: 1px solid #000000;
+     }
     }
+
 }
 
 .big-text{
@@ -222,7 +227,12 @@ body.post-2{
 
 body.page {
    article { width: 100%;
-   max-width:$article-width; margin:0 auto; }
+   max-width:$article-width; margin:0 auto;
+   a {
+     text-decoration: none;
+     border-bottom: 1px solid #000000;
+   }
+ }
 
    @media (min-width: 600px) {
      // two columns layout
