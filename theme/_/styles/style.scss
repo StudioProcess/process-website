@@ -198,7 +198,12 @@ body.single-works {
    .vimeo-outer { margin:0 auto; margin-top:60px; }
    .text {
      width: 100%;
-     max-width:$article-width; margin:0 auto; }
+     max-width:$article-width; margin:0 auto;
+     a {
+       text-decoration: none;
+       border-bottom: 1px solid #000000;
+     }
+   }
    .credits {
      @include font-size($fs-credits);
      line-height: $line-height-credits;
