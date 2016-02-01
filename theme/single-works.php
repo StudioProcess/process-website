@@ -16,7 +16,7 @@
 
 			<section class="images">
 				<?php foreach (hue_gallery_ids() as $id) {
-					echo wp_get_attachment_image($id, 'large') . " " . PHP_EOL;
+					echo wp_get_attachment_image($id, array(1000,1000)) . " " . PHP_EOL;
 				} ?>
 			</section>
 
