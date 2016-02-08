@@ -23,7 +23,7 @@
  $line-height-credits: 1.4;
 
  $fs-menu: 18;
- $fs-footer: 13;
+ $fs-footer: 11;
 
  $fs-archive-title: 18;
  $fs-archive-subtitle: 13;
@@ -102,7 +102,11 @@
 .footer {
    @include font-size($fs-footer);
    text-align: center;
-   margin-top:60px;
+   margin-top: 100px;
+
+   p {
+     font-weight: bold;
+   }
 }
 
 

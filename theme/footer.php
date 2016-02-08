@@ -3,7 +3,7 @@
 
 				<!-- copyright -->
 				<p class="copyright">
-					<img src="/wp-content/uploads/2015/10/process-p.png" width="18px">
+					PROCESS — STUDIO FOR ART AND DESIGN
 				</p>
 				<!-- /copyright -->
 
