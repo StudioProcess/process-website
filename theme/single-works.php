@@ -32,6 +32,28 @@
 			<?php edit_post_link(); // Always handy to have Edit Post Links available ?>
 			</section>
 
+			<style>
+			body {
+				background-color: <?php echo types_render_field('background-color-post', array()); ?>;
+				color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+				}
+				body.page article a, body.single-works .credits a, body.single-works .text a {
+					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					border-bottom: 1px solid <?php echo types_render_field('foreground-color-post', array()); ?>;
+				}
+				.header nav a {
+					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+				}
+				.header nav li.current-menu-item a {
+					background-color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					color: <?php echo types_render_field('background-color-post', array()); ?>;
+				}
+				.header nav li a:hover {
+					background-color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					color: <?php echo types_render_field('background-color-post', array()); ?>;
+				}
+			</style>
+
 		</article>
 		<!-- /article -->
 
