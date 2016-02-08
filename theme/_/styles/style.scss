@@ -9,6 +9,7 @@
   * Fonts
   */
  @import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
+ @import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
  /**
   * Variables
@@ -17,6 +18,7 @@
 
  // variables
  $font-family-base: "Karla", Helvetica, sans-serif;
+ // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
  $font-size-base: 18;
  $line-height-base: 1.5;
@@ -30,7 +32,7 @@
 
  $fs-title: 26;
  $fs-subtitle: 18;
- $fs-credits: 15;
+ $fs-credits: 14;
 
  $fs-tweet: 18;
 
@@ -209,13 +211,15 @@ body.single-works {
      }
    }
    .credits {
+    font-family: "Inconsolata";
+    padding-top: 10px;
+
      @include font-size($fs-credits);
      line-height: $line-height-credits;
      width: 100%;
      max-width:$article-width; margin:0 auto;
      a {
        text-decoration: none;
-       border-bottom: 1px solid #000000;
      }
     }
 

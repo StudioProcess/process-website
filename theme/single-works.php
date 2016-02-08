@@ -37,9 +37,13 @@
 				background-color: <?php echo types_render_field('background-color-post', array()); ?>;
 				color: <?php echo types_render_field('foreground-color-post', array()); ?>;
 				}
-				body.page article a, body.single-works .credits a, body.single-works .text a {
+				body.page article a, body.single-works .text a {
 					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
 					border-bottom: 1px solid <?php echo types_render_field('foreground-color-post', array()); ?>;
+				}
+				body.single-works .credits a {
+					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					text-decoration: none;
 				}
 				.header nav a {
 					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
