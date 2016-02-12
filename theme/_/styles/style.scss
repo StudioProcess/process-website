@@ -159,8 +159,6 @@ body.home, body.archive {
 body.home, body.archive {
    article.instagram {
       max-width:380px;
-      -webkit-transition: opacity .25s, filter .25s linear;
-      -webkit-filter: opacity(30%) grayscale(100%);
       z-index: 0;
 
       .subtitle {
@@ -171,8 +169,6 @@ body.home, body.archive {
       }
    }
    article.instagram:hover {
-     -webkit-transition: opacity .25s, filter .25s linear;
-     -webkit-filter: opacity(100%) grayscale(0%);
    }
 
    article.twitter {
