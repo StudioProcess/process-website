@@ -81,11 +81,12 @@
 }
 
 .header { // Header container
+    z-index: 10;
    $header-height: 70px;
    height:$header-height;
    .header-content { position:fixed; left:0; width:100%; height:$header-height; }
 
-     nav { z-index: 9999;
+     nav { z-index: 10;
         @include font-size($fs-menu);
         font-weight: bold;
         ul { list-style-type: none; padding:0; text-align: center; }
@@ -158,8 +159,9 @@ body.home, body.archive {
  */
 body.home, body.archive {
    article.instagram {
+     z-index: -10;
       max-width:380px;
-      z-index: 0;
+      z-index: -100;
 
       .subtitle {
         margin-top:0.7em;
@@ -195,9 +197,9 @@ body.single-works {
    .subtitle { @include font-size($fs-subtitle); text-align: center; }
 
    .images {
-      img { display:block; margin:0 auto; margin-top:60px; }
+      img { display:block; margin:0 auto; margin-top:60px; margin-bottom:60px; }
    }
-   .vimeo-outer { margin:0 auto; margin-top:60px; }
+   .vimeo-outer { margin:0 auto; margin-top:60px; margin-bottom:60px;}
    .text {
      width: 100%;
      max-width:$article-width; margin:0 auto;
