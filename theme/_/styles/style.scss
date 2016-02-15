@@ -226,7 +226,7 @@ body.single-works {
 * Works Archive
 **/
 
-body.post-type-archive-works {
+body.post-type-archive-works, body.archive.tag {
     article[style] {
       margin: 8% !important;
       max-width: 400px !important;
@@ -242,7 +242,7 @@ body.post-type-archive-works {
 
 @media (max-width: 600px) {
 
-  body.post-type-archive-works {
+  body.post-type-archive-works, body.archive.tag {
     img { width: 300px; }
     article[style]{
       margin: 3% !important;
