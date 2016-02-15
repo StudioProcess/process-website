@@ -81,10 +81,12 @@
 }
 
 .header { // Header container
-    z-index: 10;
    $header-height: 70px;
    height:$header-height;
-   .header-content { position:fixed; left:0; width:100%; height:$header-height; }
+   .header-content {
+      position:fixed; left:0; width:100%; height:$header-height;
+      z-index: 10;
+   }
 
      nav { z-index: 10;
         @include font-size($fs-menu);
