@@ -159,9 +159,8 @@ body.home, body.archive {
  */
 body.home, body.archive {
    article.instagram {
-     z-index: -10;
       max-width:380px;
-      z-index: -100;
+      // z-index: -100;
 
       .subtitle {
         margin-top:0.7em;
