@@ -220,6 +220,36 @@ body.single-works {
        text-decoration: none;
      }
     }
+}
+
+/**
+* Works Archive
+**/
+
+body.post-type-archive-works {
+    article[style] {
+      margin: 8% !important;
+      max-width: 400px !important;
+      margin-bottom: 25% !important;
+    }
+    .work-container {
+      flex-basis: initial;
+    }
+    .subtitle {
+      visibility: hidden;
+    }
+}
+
+@media (max-width: 600px) {
+
+  body.post-type-archive-works {
+    img { width: 300px; }
+    article[style]{
+      margin: 3% !important;
+      margin-bottom: 33% !important;
+      padding: 0% !important;
+    }
+  }
 
 }
 
