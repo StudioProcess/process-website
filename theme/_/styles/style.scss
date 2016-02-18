@@ -8,8 +8,9 @@
  /**
   * Fonts
   */
- @import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
- @import url(https://fonts.googleapis.com/css?family=Inconsolata);
+   @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,500italic,400italic);
+   //@import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
+   @import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
  /**
   * Variables
@@ -17,11 +18,11 @@
   */
 
  // variables
- $font-family-base: "Karla", Helvetica, sans-serif;
+ $font-family-base: "Roboto", Helvetica, sans-serif;
  // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- $font-size-base: 18;
- $line-height-base: 1.5;
+ $font-size-base: 17;
+ $line-height-base: 1.9;
  $line-height-credits: 1.4;
 
  $fs-menu: 18;
@@ -133,7 +134,7 @@ body.home, body.archive {
       margin-bottom: 10vw;
       margin-right: 2%;
 
-      .title { @include font-size($fs-archive-title);
+      .title { @include font-size($fs-archive-title); font-weight:500;
          .title-extra:before { content:"—"; }
          margin:0;
          margin-top:0.5em;
@@ -165,7 +166,8 @@ body.home, body.archive {
       // z-index: -100;
 
       .subtitle {
-        margin-top:0.7em;
+        margin-top:1em;
+        line-height: 1.6em;
       }
       .subtitle2 {
         margin-top:0.5em;
@@ -194,8 +196,8 @@ body.home, body.archive {
  * Single WORK
  */
 body.single-works {
-   .title { @include font-size($fs-title); text-align: center; }
-   .subtitle { @include font-size($fs-subtitle); text-align: center; }
+   .title { @include font-size($fs-title); text-align: center; font-weight:700; text-transform: uppercase;}
+   .subtitle { @include font-size($fs-subtitle); text-align: center; font-weight:300;}
 
    .images {
       img { display:block; margin:0 auto; margin-top:60px; margin-bottom:60px; }
