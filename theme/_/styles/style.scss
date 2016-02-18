@@ -22,7 +22,7 @@
  // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
  $font-size-base: 17;
- $line-height-base: 1.9;
+ $line-height-base: 1.8;
  $line-height-credits: 1.4;
 
  $fs-menu: 18;
@@ -137,11 +137,11 @@ body.home, body.archive {
       .title { @include font-size($fs-archive-title); font-weight:500;
          .title-extra:before { content:"—"; }
          margin:0;
-         margin-top:0.5em;
+         margin-top:0.8em;
       }
       .subtitle { @include font-size($fs-archive-subtitle); font-weight:normal;
          margin:0;
-         margin-top:0.2em;
+         margin-top:0.8em;
          p { margin:0; }
       }
       a { text-decoration: none; }
@@ -166,7 +166,7 @@ body.home, body.archive {
       // z-index: -100;
 
       .subtitle {
-        margin-top:1em;
+        margin-top:1.3em;
         line-height: 1.6em;
       }
       .subtitle2 {
@@ -196,7 +196,7 @@ body.home, body.archive {
  * Single WORK
  */
 body.single-works {
-   .title { @include font-size($fs-title); text-align: center; font-weight:700; text-transform: uppercase;}
+   .title { @include font-size($fs-title); text-align: center; font-weight:700; text-transform: uppercase; letter-spacing: 1px;}
    .subtitle { @include font-size($fs-subtitle); text-align: center; font-weight:300;}
 
    .images {
@@ -258,6 +258,7 @@ body.post-type-archive-works, body.archive.tag {
 
 .big-text{
   @include font-size($fs-title);
+  line-height: 1.4em;
   width: 100%;
   max-width:$article-width;
   margin-top: 0.67em;
