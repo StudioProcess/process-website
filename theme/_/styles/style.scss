@@ -168,9 +168,11 @@ body.home, body.archive {
       .subtitle {
         margin-top:1.3em;
         line-height: 1.6em;
+        display: none;
       }
       .subtitle2 {
-        margin-top:0.5em;
+        display: block;
+        margin-top:1.3em;
         margin-bottom:1.3em;
       }
    }
@@ -187,9 +189,16 @@ body.home, body.archive {
    }
 
    article.featured {
-     margin: 0;
-     margin-top:1.0em;
+     font-size: 18px;
+     margin-right: 0.8em;
+     margin-left: 0.8em;
+     margin-top:1.3em;
      margin-bottom:1.3em;
+
+     a {
+       text-decoration: none;
+       border-bottom: 1px solid #000000;
+     }
    }
 }
 
@@ -257,9 +266,19 @@ body.post-type-archive-works, body.archive.tag {
     }
   }
 
-  article.featured {
+  body.home article.featured {
+
     padding: 2.3em;
+    margin-right: 0.8em;
+    margin-left: 0.8em;
+    margin-top: 1.3em;
     font-size: 14px;
+
+    a {
+      text-decoration: none;
+      border-bottom: 1px solid #000000;
+    }
+
   }
 
 }
