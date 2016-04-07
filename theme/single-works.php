@@ -56,6 +56,9 @@
 					background-color: <?php echo types_render_field('foreground-color-post', array()); ?>;
 					color: <?php echo types_render_field('background-color-post', array()); ?>;
 				}
+				.pace .pace-progress {
+					background: <?php echo types_render_field('foreground-color-post', array()); ?>;
+				}
 			</style>
 
 		</article>
