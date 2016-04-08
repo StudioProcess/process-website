@@ -4,7 +4,7 @@
 	<!-- section -->
 	<section>
 
-	<?php if (have_posts()): while (have_posts()) : the_post(); ?>
+	<?php if (have_posts()): while (have_posts()) : the_post(); $current_work = get_the_ID(); ?>
 
 		<!-- article -->
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -59,12 +59,39 @@
 				.pace .pace-progress {
 					background: <?php echo types_render_field('foreground-color-post', array()); ?>;
 				}
+
+				section.work-links-in-post article:after {
+					 background-color: <?php echo types_render_field('foreground-color-post', array()); ?>; 
+				}
 			</style>
 
 		</article>
 		<!-- /article -->
 
 	<?php endwhile; endif; ?>
+
+	</section>
+
+<h2 class="more-works">More Works</h2>
+
+	<section class="work-links-in-post">
+
+		<?php
+			// The Query
+			query_posts(array(
+				'post_type' => 'works',
+				'tag__not_in' => array(3),
+				'post__not_in' => array($current_work)
+			) );
+
+			// The Loop
+			while ( have_posts() ) : the_post(); ?>
+				<?php get_template_part('card-work') ?>
+			<? endwhile;
+
+			// Reset Query
+			wp_reset_query();
+		?>
 
 	</section>
 	<!-- /section -->
