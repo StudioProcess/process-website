@@ -374,27 +374,65 @@ body.single-works {
     margin-top: 80px;
     margin-bottom: 40px;
   }
-
   section.work-links-in-post {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-around;
-    align-items:center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
     max-width: 1000px;
     margin: 0 auto;
-
-    .work-container { flex-basis: initial; }
-
-    article[style]{
+    .work-container {
+      flex-basis: initial;
+    }
+    article[style] {
       max-width: 200px !important;
-      margin: 100px 2.5% !important;
-      margin: 100px 2.5vw !important;
-      margin-top: 0 !important;
-      padding: 0% !important;
+      margin: 0 2.5vw 100px !important;
+      padding: 0 !important;
       position: relative;
-
-      .title, .subtitle { display: none;}
-
+      .subtitle {
+        display: none;
+      }
+      hgroup {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        pointer-events: none;
+        &:before {
+          background-color: $text-color;
+          content: ' ';
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0.1;
+          top: 0;
+          left: 0;
+        }
+      }
+      .title {
+        opacity: 0;
+        position: relative;
+        a {
+          text-decoration: none;
+          text-transform: none;
+          @include font-size($fs-subtitle);
+          color: $body-bg;
+        }
+        margin: 0 15px;
+      }
+      &:hover {
+        hgroup:before {
+          opacity: 0.9;
+        }
+        .title {
+          opacity: 1;
+        }
+        cursor: pointer;
+      }
       img {
         filter: grayscale(100%);
         opacity: 0.9;
@@ -404,24 +442,14 @@ body.single-works {
         background-color: #ffffff;
         display: block;
         position: absolute;
-        width: 99.8%; /* not 100%, because of chrome bug weißer blitzer */
-        height: 99.8%; /* not 100%, because of chrome bug weißer blitzer */
+        width: 99.8%;
+        /* not 100%, because of chrome bug weißer blitzer */
+        height: 99.8%;
+        /* not 100%, because of chrome bug weißer blitzer */
         top: 0;
         left: 0;
-      }
-      &:after {
-        content: ' ';
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0.1;
-        top: 0;
-        left: 0;
-
-        pointer-events: none;
       }
     }
-
   }
 }
+/* END: Work thumbnails on single works */

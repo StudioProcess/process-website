@@ -33,36 +33,46 @@
 			</section>
 
 			<style>
+			<? $fg = types_render_field('foreground-color-post', array()); ?>
+			<? $bg = types_render_field('background-color-post', array()); ?>
 			body {
-				background-color: <?php echo types_render_field('background-color-post', array()); ?>;
-				color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+				background-color: <?php echo $bg; ?>;
+				color: <?php echo $fg; ?>;
 				}
 				body.page article a, body.single-works .text a {
-					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
-					border-bottom: 1px solid <?php echo types_render_field('foreground-color-post', array()); ?>;
+					color: <?php echo $fg; ?>;
+					border-bottom: 1px solid <?php echo $fg; ?>;
 				}
 				body.single-works .credits a {
-					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					color: <?php echo $fg; ?>;
 					text-decoration: none;
 				}
 				.header nav a {
-					color: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					color: <?php echo $fg; ?>;
 				}
 				.header nav li.current-menu-item a {
-					background-color: <?php echo types_render_field('foreground-color-post', array()); ?>;
-					color: <?php echo types_render_field('background-color-post', array()); ?>;
+					background-color: <?php echo $fg; ?>;
+					color: <?php echo $bg; ?>;
 				}
 				.header nav li a:hover {
-					background-color: <?php echo types_render_field('foreground-color-post', array()); ?>;
-					color: <?php echo types_render_field('background-color-post', array()); ?>;
+					background-color: <?php echo $fg; ?>;
+					color: <?php echo $bg; ?>;
 				}
 				.pace .pace-progress {
-					background: <?php echo types_render_field('foreground-color-post', array()); ?>;
+					background: <?php echo $fg; ?>;
 				}
 
-				section.work-links-in-post article:after {
-					 background-color: <?php echo types_render_field('foreground-color-post', array()); ?>; 
+				<?php if(!empty($fg)): ?>
+				section.work-links-in-post article hgroup:before {
+					 background-color: <?php echo $fg; ?> !important;
 				}
+				<?php endif; ?>
+
+				<?php if(!empty($bg)): ?>
+				section.work-links-in-post article .title a {
+					 color: <?php echo $bg; ?> !important;
+				}
+				<?php endif; ?>
 			</style>
 
 		</article>

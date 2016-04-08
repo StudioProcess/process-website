@@ -17,10 +17,12 @@
       <?php endif; ?>
       <!-- /post thumbnail -->
 
-      <!-- post title --><?php ; ?>
-      <?php $title_extra = types_render_field('title-extra', array()); ?>
-      <h2 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); if (!empty($title_extra)) echo " <span class='title-extra'> {$title_extra}</span>"; ?></a></h2>
-      <h3 class="subtitle"><?php echo types_render_field('subtitle', array()); ?></h3>
+      <!-- post title -->
+      <hgroup>
+        <?php $title_extra = types_render_field('title-extra', array()); ?>
+        <h2 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); if (!empty($title_extra)) echo " <span class='title-extra'> {$title_extra}</span>"; ?></a></h2>
+        <h3 class="subtitle"><?php echo types_render_field('subtitle', array()); ?></h3>
+      </hgroup>
       <!-- /post title -->
 
       </article>
