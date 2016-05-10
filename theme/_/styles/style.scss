@@ -43,6 +43,7 @@
  $body-bg: #fff;
  $selection-bg: #fff;
  $selection-fg: lighten($text-color, 50%);
+ $hoverColor: #525252;
 
 // grid
  $wrapper-width: 1280px;
@@ -67,6 +68,11 @@
 
 @mixin inverted() {
    background-color:$text-color; color:$body-bg; a { color:$body-bg; }
+}
+
+@mixin hoverWork() {
+   //background-color:$text-color;
+   color: $hoverColor; a { color:$hoverColor; border-bottom: 2px solid $hoverColor;}
 }
 
 @mixin invertedBar(){
@@ -150,7 +156,7 @@ body.home, body.archive {
          p { margin:0; }
       }
       a { text-decoration: none; }
-      &:hover .title { @include inverted(); }
+      &:hover .title { @include hoverWork(); }
       // &:hover img { outline: 7px inset $text-color; outline-offset:-7px; }
       .title, .subtitle { text-align: center; }
    }
