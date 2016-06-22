@@ -11,6 +11,7 @@
    @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,500italic,400italic);
    //@import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
    @import url(https://fonts.googleapis.com/css?family=Inconsolata);
+   @import url(https://fonts.googleapis.com/css?family=Space+Mono:400,700);
 
  /**
   * Variables
@@ -67,12 +68,15 @@
 
 
 @mixin inverted() {
+  font-family: 'Space Mono', monospace;
    background-color:$text-color; color:$body-bg; a { color:$body-bg; }
 }
 
 @mixin hoverWork() {
    //background-color:$text-color;
-   color: $hoverColor; a { color:$hoverColor; border-bottom: 2px solid $hoverColor;}
+   font-family: 'Space Mono', monospace;
+   font-weight: bold;
+   color: $text-color; a { color:$text-color; border-bottom: 2px solid $text-color;}
 }
 
 @mixin invertedBar(){
@@ -105,6 +109,8 @@
        nav { z-index: 10;
           //@include font-size($fs-menu);
           //font-family: "Inconsolata";
+          font-family: 'Space Mono', monospace;
+
           font-size: 15px;
           letter-spacing: 1px;
           text-transform: uppercase;
@@ -125,7 +131,7 @@
 @media (min-width: 601px) {
 
   .header { // Header container
-     $header-height: 170px;
+     $header-height: 70px;
      padding-top: 10px;
      height:$header-height;
      .header-content {
@@ -136,6 +142,7 @@
        nav { z-index: 10;
           @include font-size($fs-menu);
           //font-family: "Inconsolata";
+          font-family: 'Space Mono', monospace;
           letter-spacing: 1px;
           text-transform: uppercase;
           font-weight: bold;
@@ -191,7 +198,7 @@ body.home, body.archive {
          margin-top:0.8em;
          p { margin:0; }
       }
-      a { text-decoration: none; }
+      a { font-family: 'Space Mono', monospace; text-decoration: none; }
       &:hover .title { @include hoverWork(); }
       // &:hover img { outline: 7px inset $text-color; outline-offset:-7px; }
       .title, .subtitle { text-align: center; }
@@ -244,12 +251,15 @@ body.home, body.archive {
      margin-bottom:1.3em;
 
      a {
+       font-family: 'Space Mono', monospace;
        text-decoration: none;
-       border-bottom: 1px solid #000000;
+       border-bottom: 1px solid $text-color;
      }
      a:hover {
-       color: #a8a8a8;
-       border-bottom: 1px solid #a8a8a8;
+       font-family: 'Space Mono', monospace;
+       color: $text-color;
+       font-weight: bold;
+       border-bottom: 2px solid $text-color;
      }
    }
 }
@@ -271,8 +281,15 @@ body.single-works {
      width: 100%;
      max-width:$article-width; margin:0 auto;
      a {
+       font-family: 'Space Mono', monospace;
        text-decoration: none;
-       border-bottom: 1px solid #000000;
+       border-bottom: 1px solid $text-color;
+     }
+     a:hover {
+       font-family: 'Space Mono', monospace;
+       font-weight: bold;
+       text-decoration: none;
+       border-bottom: 2px solid $text-color;
      }
    }
    .credits {
@@ -327,8 +344,9 @@ body.post-type-archive-works, body.archive.tag {
     font-size: 14px;
 
     a {
+      font-family: 'Space Mono', monospace;
       text-decoration: none;
-      border-bottom: 1px solid #000000;
+      border-bottom: 1px solid $text-color;
     }
 
   }
@@ -353,8 +371,14 @@ body.page {
    article { width: 100%;
    max-width:$article-width; margin:0 auto;
    a {
+     font-family: 'Space Mono', monospace;
      text-decoration: none;
-     border-bottom: 1px solid #000000;
+     border-bottom: 1px solid $text-color;
+   }
+   a:hover {
+     font-family: 'Space Mono', monospace;
+     font-weight: bold;
+     border-bottom: 2px solid $text-color;
    }
  }
 

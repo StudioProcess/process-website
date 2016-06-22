@@ -43,6 +43,11 @@
 					color: <?php echo $fg; ?>;
 					border-bottom: 1px solid <?php echo $fg; ?>;
 				}
+
+				body.single-works .text a:hover {
+					color: <?php echo $fg; ?>;
+					border-bottom: 2px solid <?php echo $fg; ?>;
+				}
 				body.single-works .credits a {
 					color: <?php echo $fg; ?>;
 					text-decoration: none;
