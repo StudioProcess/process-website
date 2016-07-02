@@ -337,11 +337,13 @@ body.post-type-archive-works, body.archive.tag {
 
   body.home article.featured {
 
-    padding: 2.3em;
-    margin-right: 0.8em;
-    margin-left: 0.8em;
-    margin-top: 1.3em;
-    font-size: 14px;
+    //padding: 0.3em;
+    margin-right: 0.1em;
+    margin-left: 0.1em;
+    margin-top: 3.3em;
+    margin-bottom: 3.3em;
+    font-size: 16px;
+    text-align: center;
 
     a {
       font-family: 'Space Mono', monospace;
@@ -350,6 +352,8 @@ body.post-type-archive-works, body.archive.tag {
     }
 
   }
+
+  article.featured {}
 
 }
 
