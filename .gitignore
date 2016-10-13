@@ -9,3 +9,7 @@ theme/_/modules/sync_pw.php
 process
 
 npm-debug.log
+
+theme/_/styles/dist/style.css
+
+theme/_/styles/dist/style.css.map
