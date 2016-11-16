@@ -191,7 +191,7 @@ gulp.task('build', ['scripts', 'styles']);
 /**
  *  watch styles & scripts (with livereload via browsersync)
  */
-gulp.task('watch', ['browsersync', 'build'], function() {
+gulp.task('serve', ['browsersync', 'build'], function() {
    // watch styles
    gulp.watch( srcPath('styles'), ['styles', 'upload-styles'] );
 
@@ -208,7 +208,7 @@ gulp.task('watch', ['browsersync', 'build'], function() {
       // browserSync.reload(event.path);
    });
 });
-
+gulp.task('watch', ['serve']);
 
 
 /**
