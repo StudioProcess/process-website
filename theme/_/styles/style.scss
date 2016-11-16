@@ -22,21 +22,21 @@
  $font-family-base: "Roboto", Helvetica, sans-serif;
  // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- $font-size-base: 17;
+ $font-size-base: 19;
  $line-height-base: 1.8;
- $line-height-credits: 1.4;
+ $line-height-credits: 1.6;
 
- $fs-menu: 18;
- $fs-footer: 11;
+ $fs-menu: 20;
+ $fs-footer: 14;
 
- $fs-archive-title: 18;
- $fs-archive-subtitle: 13;
+ $fs-archive-title: 20;
+ $fs-archive-subtitle: 16;
 
  $fs-title: 26;
  $fs-subtitle: 18;
- $fs-credits: 14;
+ $fs-credits: 16s;
 
- $fs-tweet: 18;
+ $fs-tweet: 20;
 
 
  // colors
@@ -47,8 +47,8 @@
  $hoverColor: #525252;
 
 // grid
- $wrapper-width: 1280px;
- $article-width: 1000px;
+ $wrapper-width: 95%;
+ $article-width: 95%;
 
  $padding-horizontal-base: 5px;
  $padding-vertical-base: 5px;
@@ -111,7 +111,7 @@
           //font-family: "Inconsolata";
           font-family: 'Space Mono', monospace;
 
-          font-size: 15px;
+          font-size: 18px;
           letter-spacing: 1px;
           text-transform: uppercase;
           font-weight: bold;
@@ -137,7 +137,7 @@ div p em {
 @media (min-width: 601px) {
 
   .header { // Header container
-     $header-height: 70px;
+     $header-height: 100px;
      padding-top: 10px;
      height:$header-height;
      .header-content {
@@ -403,7 +403,7 @@ body.page {
      	margin-top: -30px;
      }
      .items img {
-      margin-top: 50px;
+      //margin-top: 50px;
      }
      .items .item {
      	flex: 1 0 calc(25% - 10px);
