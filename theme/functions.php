@@ -7,6 +7,9 @@
 
 
 require_once "_/modules/is-debug.php";
+if (HTML5_DEBUG) {
+  require_once "_/modules/debug.php";
+}
 require_once "_/modules/sync.php";
 
 /*------------------------------------*\
