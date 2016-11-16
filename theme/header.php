@@ -12,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 
-		<script src="http://www.process.studio/wp-content/themes/process2015/pace.min.js"></script>
+		<script src="http://process.studio/wp-content/themes/process2015/pace.min.js"></script>
 
 		<?php wp_head(); ?>
 
