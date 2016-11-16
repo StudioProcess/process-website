@@ -95,6 +95,21 @@
   position: relative;
 }
 
+// Language Switcher
+nav .lang-menu {
+  // rename long names
+  .lang-name-full {display:none;}
+  a[lang^=en]:before {content:'EN';}
+  a[lang^=de]:before {content:'DE';}
+}
+
+
+nav .lang-menu {
+  li.current-lang a { @include inverted(); }
+  display:none; // TODO : unhide and position
+}
+
+
 @media (max-width: 600px) {
 
   .header { // Header container

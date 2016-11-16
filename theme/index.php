@@ -3,7 +3,7 @@
 	<main role="main">
 		<!-- section -->
 		<section>
-				<?php if(is_home()) include 'card-featured.php'; ?>
+			<?php if (is_home()) include 'card-featured.php'; ?>
 
 			<?php //PrcsSync::sync(); // TODO: this takes too long
 			$social_posts = prcs_get_social_posts(40);

@@ -65,7 +65,28 @@ function html5blank_nav()
         'after'           => '',
         'link_before'     => '',
         'link_after'      => '',
-        'items_wrap'      => '<ul>%3$s</ul>',
+        'items_wrap'      => '<ul class="main-menu">%3$s</ul>',
+        'depth'           => 0,
+        'walker'          => ''
+        )
+    );
+    
+    wp_nav_menu(
+    array(
+        'theme_location'  => 'lang-menu',
+        'menu'            => '',
+        'container'       => 'div',
+        'container_class' => 'menu-{menu slug}-container',
+        'container_id'    => '',
+        'menu_class'      => '',
+        'menu_id'         => '',
+        'echo'            => true,
+        'fallback_cb'     => 'wp_page_menu',
+        'before'          => '',
+        'after'           => '',
+        'link_before'     => '<span class="lang-name-full">',
+        'link_after'      => '</span>',
+        'items_wrap'      => '<ul class="lang-menu">%3$s</ul>',
         'depth'           => 0,
         'walker'          => ''
         )
@@ -110,7 +131,8 @@ function html5blank_styles()
 function register_html5_menu()
 {
     register_nav_menus(array( // Using array to specify more menus if needed
-        'main-menu' => __('Main Menu', 'html5blank') // Main Navigation
+        'main-menu' => __('Main Menu', 'html5blank'), // Main Navigation
+        'lang-menu' => 'Language Switcher' // Language Switcher
     ));
 }
 
