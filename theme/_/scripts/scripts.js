@@ -1,5 +1,5 @@
 /* globals imagesLoaded */
-(function( root, $, undefined ) {
+(function( root, $ ) {
 	"use strict";
 
 	// fade in images

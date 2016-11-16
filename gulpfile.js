@@ -6,13 +6,13 @@
    FIXME/TODO:
    x css sourcemaps not working (they were not properly uploaded)
    x only upload changed files
+   x switch to eslint
    * css reload seems to happen before upload is finished -> check again. fix is in upload-styles
    * allow multiple js files -> should be fixed?
    * delete before deploy / or some kind of sync
    * allow inserting bower dependencies via wiredep
    * how to deal with base path being specified in .bowerrc?
    * make this a repo
-   * switch to eslint
    * option for ruby-sass
    * compile sass on partial changes
    * use mac notifications for errors
@@ -75,8 +75,8 @@ var destPath = function(name, ext) {
  */
 gulp.task('scripts', ['bower-scripts'], function() {
    return gulp.src(srcPath('scripts') )
-      .pipe( $.jshint() )
-      .pipe( $.jshint.reporter('jshint-stylish') )
+      .pipe( $.eslint() )
+      .pipe( $.eslint.format() )
       .pipe( $.sourcemaps.init() )
       .pipe( $.uglify({ preserveComments: $.uglifySaveLicense })).on('error', errorHandler('Uglify') )
       .pipe( $.rename({extname: '.min.js'}) )
@@ -130,7 +130,7 @@ gulp.task('styles', ['bower-styles'], function() {
       .pipe( $.sourcemaps.init() )
       .pipe( $.sass(sassOptions) ).on( 'error', errorHandler('Sass') )
       .pipe( $.autoprefixer() ).on( 'error', errorHandler('Autoprefixer') )
-      .pipe( $.minifyCss() ).on( 'error', errorHandler('Minify CSS') )
+      .pipe( $.cleanCss() ).on( 'error', errorHandler('Minify CSS') )
       .pipe( $.sourcemaps.write('.') )
       .pipe( gulp.dest(destPath('styles')) )
       .pipe( $.size({title: "styles:", showFiles: true}) );
@@ -147,7 +147,7 @@ gulp.task('bower-styles', function() {
       .pipe( $.debug({title: "bower-styles:"}) )
       // .pipe($.sourcemaps.init())
       .pipe( $.concat('vendor.css') )
-      .pipe( $.minifyCss() ).on( 'error', errorHandler('Minify CSS') )
+      .pipe( $.cleanCss() ).on( 'error', errorHandler('Minify CSS') )
       // .pipe($.rename({extname: '.min.js'}))
       // .pipe($.sourcemaps.write( '.' ))
       .pipe( gulp.dest(destPath('styles')) )
