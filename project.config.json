@@ -6,7 +6,7 @@
 	"basePath" : "theme/",
 	"paths" : {
 		"templates" : {
-			"src" : ["./*", "!.*"],
+			"src" : ["./*", "./**/*.php", "!.*"],
 			"dest" : "./"
 		},
 		"styles" : {
