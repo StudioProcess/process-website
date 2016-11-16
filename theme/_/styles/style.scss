@@ -365,7 +365,8 @@ body.post-type-archive-works, body.archive.tag {
 }
 
 .big-text{
-  @include font-size($fs-title);
+  //@include font-size($fs-title);
+  font-size: 33px;
   line-height: 1.4em;
   width: 100%;
   max-width:$article-width;
