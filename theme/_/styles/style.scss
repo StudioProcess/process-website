@@ -421,6 +421,8 @@ p.big-text-start{
   font-size: 24px;
   line-height: 1.4em;
   margin-top: 0;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .big-text{
   //@include font-size($fs-title);
@@ -476,6 +478,37 @@ body.page {
     }
     .items .item {
     }
+ }
+}
+
+@media (min-width: 900px) {
+  // two columns layout
+  .items {
+   display: flex;
+   align-items: flex-end;
+   flex-wrap: wrap;
+   padding-top: 20px;
+   margin-left: -30px;
+   margin-top: -30px;
+  }
+  .items img {
+   //margin-top: 50px;
+   padding-left: 1em;
+   max-height: 80vh;
+   min-height: 250px;
+  }
+  .items .item {
+   flex: 1 0 calc(25% - 10px);
+   //margin: 30px;
+  }
+}
+@media (max-width: 899px) {
+ // two columns layout
+ .items img {
+  margin-top: 50px;
+ }
+ .items .item {
+   margin-top: 30px;
  }
 }
 
