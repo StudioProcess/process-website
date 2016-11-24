@@ -263,11 +263,46 @@ body.home, body.archive {
      }
    }
 
-   article.featured {
+   article.featured-text {
      //font-size: 18px;
-     font-size: 20px;
-     margin-right: 0.8em;
-     margin-left: 0.8em;
+     max-width: 1000px;
+     font-size: 21px;
+     margin-right: 10%;
+     margin-left: 10%;
+     margin-top:0.3em;
+     margin-bottom:1.3em;
+
+     a {
+       font-family: 'Space Mono', monospace;
+       text-decoration: none;
+       border-bottom: 1px solid $text-color;
+     }
+     a:hover {
+       font-family: 'Space Mono', monospace;
+       color: $text-color;
+       font-weight: bold;
+       border-bottom: 2px solid $text-color;
+     }
+   }
+
+   article.featured-image {
+     img{
+       max-height: 70vh;
+     }
+     max-width: 1000px;
+     max-height: 70vh;
+     margin-right: 10%;
+     margin-left: 10%;
+     margin-bottom: 2em !important
+     //margin-bottom:1.3em;
+   }
+
+   article.featured-stream {
+     //font-size: 18px;
+     max-width: 500px;
+     font-size: 21px;
+     margin-right: 10%;
+     margin-left: 10%;
      margin-top:1.3em;
      margin-bottom:1.3em;
 
@@ -283,6 +318,7 @@ body.home, body.archive {
        border-bottom: 2px solid $text-color;
      }
    }
+
 }
 
 
