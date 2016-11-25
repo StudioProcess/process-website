@@ -32,7 +32,7 @@
 			for (var i = 0; i < word.length; i++) {
 				htm += '<span>' + word[i] + '</span>';
 			}
-			htm += '</div>&nbsp;';
+			htm += '</div> ';
 		}
 		$block.html(htm);
 		// highlight special words
