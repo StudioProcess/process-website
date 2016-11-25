@@ -18,5 +18,23 @@
 	$(function () {
 		$('body.single-works #menu-item-8').addClass('current-menu-item');
 	});
+	
+	// intro text effect
+	$(function () {
+		var $block = $('.big-text-start');
+		var str = $block.text().trim();
+		var words = str.split(/\s/); // split text into words (by whitespace)
+		var htm = '';
+		for (var j = 0; j < words.length; j++) {
+			var word = words[j];
+			htm += '<div>';
+			for (var i = 0; i < word.length; i++) {
+				htm += '<span>' + word[i] + '</span>';
+			}
+			htm += '</div>&nbsp;';
+		}
+
+		$block.html(htm);
+	});
 
 } ( this, jQuery ));
