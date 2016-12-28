@@ -201,11 +201,14 @@ html.js {
 /**
  * HOME Page / WORKS Archive
  */
+.description-text-start {
+   margin-bottom: 0px !important;
+ }
 body.home, body.archive {
    section { display:flex; flex-wrap:wrap; justify-content:space-around; align-items:center; }
    article {
       display: inline-block;
-      margin-bottom: 10%;
+      //margin-bottom: 10%;
       margin-bottom: 10vw;
       margin-right: 2%;
 
@@ -301,12 +304,12 @@ body.home, body.archive {
    article.featured-stream {
      //font-size: 18px;
 
-     font-size: 19px;
-
 
     @media (max-width: 599px) {
+      font-size: 18px;
     }
      @media (min-width: 600px) {
+       font-size: 23px;
        max-width: 550px;
        margin-right: 10%;
        margin-left: 10%;
