@@ -109,6 +109,26 @@ nav .lang-menu {
   display:none; // TODO : unhide and position
 }
 
+// about page image size
+.about-image {
+  img {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 100%;
+    margin-bottom: 30px !important;
+
+    @media (max-width: 600px) {
+      margin-top: 40px !important;
+    }
+  }
+}
+
+.contact-text {
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
 
 @media (max-width: 600px) {
 
