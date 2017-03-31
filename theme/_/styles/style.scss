@@ -13,13 +13,22 @@
    @import url(https://fonts.googleapis.com/css?family=Inconsolata);
    @import url(https://fonts.googleapis.com/css?family=Space+Mono:400,700);
 
+   @font-face {
+    font-family: 'GT America';
+    src: url('../fonts/GT-America-Standard-Regular.eot');
+    src: url('../fonts/GT-America-Standard-Regular.woff') format('woff'),
+         url('../fonts/GT-America-Standard-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+
  /**
   * Variables
   * ---
   */
 
  // variables
- $font-family-base: "Roboto", Helvetica, sans-serif;
+ $font-family-base: "GT America", Helvetica, sans-serif;
  // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
  $font-size-base: 19;
