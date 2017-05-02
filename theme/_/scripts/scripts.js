@@ -76,5 +76,18 @@
 		
 		trigger();
 	});
+	
+	// // Fullscreen mode (unfortunately doesn't stick while navigating)
+	// // -> use CMD+CTRL+F in Chrome
+	// $(function () {
+	// 	$(document).keydown(function(e) {
+	// 		console.log(e.keyCode);
+	// 		if (e.keyCode == 70) { // 'f' key
+	// 			var el = $('html')[0];
+	// 			if (el.requestFullscreen) el.requestFullscreen();
+	// 			else if (el.webkitRequestFullScreen) el.webkitRequestFullScreen();
+	// 		}
+	// 	});
+	// });
 
 } ( this, jQuery ));
