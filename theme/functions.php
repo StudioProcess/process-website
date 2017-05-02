@@ -518,14 +518,18 @@ add_shortcode( 'vimeo', 'prcs_vimeo_shortcode' );
    Metadata
 \*------------------------------------*/
 function prcs_schemaorg_publisher_extra_tags( $metatags ) {
-    // Organization Postal Address
-    $metatags[] = '<!-- Scope BEGIN: Organization Postal Address -->';
-    $metatags[] = '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+    // Organization Extra Info
+    $metatags[] = '<!-- Scope BEGIN: Organization Postal Address/Location -->';
+    $metatags[] = '<span itemprop="address location" itemscope itemtype="http://schema.org/PostalAddress">';
     $metatags[] = '<meta itemprop="streetAddress" content="Florianigasse 50/1/5" />';
     $metatags[] = '<meta itemprop="postalCode" content="1080" />';
     $metatags[] = '<meta itemprop="addressLocality" content="Vienna, Austria" />';
     $metatags[] = '</span> <!-- Scope END: Organization Postal Address -->';
-
+    $metatags[] = '<meta itemprop="email" content="contact@process.studio" />';
+    $metatags[] = '<meta itemprop="telephone" content="+4368120450780" />';
+    $metatags[] = '<meta itemprop="vatID" content="ATU70246539" />';
+    $metatags[] = '<meta itemprop="legalName" content="Process – Studio for Art and Design OG" />';
+    
     return $metatags;
 }
 add_filter( 'amt_schemaorg_publisher_extra', 'prcs_schemaorg_publisher_extra_tags' );
