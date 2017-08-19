@@ -88,14 +88,14 @@
 
 
 @mixin inverted() {
-  font-family: 'Space Mono', monospace;
+  //font-family: 'Space Mono', monospace;
    background-color:$text-color; color:$body-bg; a { color:$body-bg; }
 }
 
 @mixin hoverWork() {
    //background-color:$text-color;
-   font-family: 'Space Mono', monospace;
-   font-weight: bold;
+   //font-family: 'Space Mono', monospace;
+   //font-weight: bold;
    color: $text-color; a { color:$text-color; border-bottom: 2px solid $text-color;}
 }
 
@@ -262,7 +262,7 @@ body.home, body.archive {
          margin-top:0.8em;
          p { margin:0; }
       }
-      a { font-family: 'Space Mono', monospace; text-decoration: none; }
+      a { font-family: "GT America", Helvetica, sans-serif; text-decoration: none; }//'Space Mono', monospace; text-decoration: none; }
       &:hover .title { @include hoverWork(); }
       // &:hover img { outline: 7px inset $text-color; outline-offset:-7px; }
       .title, .subtitle { text-align: center; }
@@ -442,9 +442,10 @@ body.post-type-archive-works, body.archive.tag {
     }
     .work-container {
       flex-basis: initial;
+      max-width: 400px;
     }
     .subtitle {
-      //visibility: hidden;
+      visibility: hidden;
     }
 }
 
