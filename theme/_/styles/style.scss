@@ -587,8 +587,8 @@ body.page {
  }
 
  .item.xyz img {
-   display: block;
-   margin: 0 auto;
+   display: block !important;
+   margin: 0 auto !important;
  }
 
    @media (min-width: 600px) {
