@@ -592,6 +592,8 @@ body.page {
      }
      .items img {
       //margin-top: 50px;
+      display: block;
+      margin: 0 auto;
      }
      .items .item {
      	flex: 1 0 calc(25% - 10px);
