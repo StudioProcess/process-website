@@ -586,6 +586,11 @@ body.page {
    }
  }
 
+ .item.xyz.img {
+   display: block;
+   margin: 0 auto;
+ }
+
    @media (min-width: 600px) {
      // two columns layout
      .items {
