@@ -586,11 +586,6 @@ body.page {
    }
  }
 
- .item.xyz img {
-   display: block !important;
-   margin: 0 auto !important;
- }
-
    @media (min-width: 600px) {
      // two columns layout
      .items {
@@ -618,6 +613,11 @@ body.page {
     .items .item {
     }
  }
+}
+
+.item.xyz img {
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 @media (min-width: 900px) {
