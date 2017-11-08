@@ -350,15 +350,18 @@ body.home, body.archive {
 
 
     @media (max-width: 599px) {
-      font-size: 18px;
+      font-size: 16px !important;
+      text-align: center;
+      margin-top: 5.3em;
+      margin-bottom: 5.3em;
     }
      @media (min-width: 600px) {
        font-size: 23px;
        max-width: 550px;
        margin-right: 10%;
        margin-left: 10%;
-       margin-top:1.3em;
-       margin-bottom:1.3em;
+       margin-top: 5.3em;
+       margin-bottom: 5.3em;
       }
 
      a {
@@ -584,7 +587,7 @@ body.page {
      	display: flex;
      	flex-wrap: wrap;
       padding-top: 20px;
-     	margin-left: -30px;
+     	//margin-left: -30px;
      	margin-top: -30px;
      }
      .items img {
@@ -612,12 +615,12 @@ body.page {
    //align-items: flex-end;
    flex-wrap: wrap;
    padding-top: 20px;
-   margin-left: -30px;
+   //margin-left: -30px;
    margin-top: -30px;
   }
   .items img {
    //margin-top: 50px;
-   padding-left: 1em;
+   //padding-left: 1em;
    max-height: 80vh;
    min-height: 250px;
   }
