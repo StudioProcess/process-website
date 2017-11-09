@@ -424,10 +424,9 @@ body.single-works {
 /**
 * Spacing for content in "items"-div on content pages
 **/
-img.xyz {
-  display: block;
-  margin: 60px auto;
-  //margin-bottom: 3em;
+.xyz img {
+  display: block !important;
+  margin: 1em auto !important;
 }
 
 .first-image {
@@ -614,8 +613,7 @@ body.page {
 
 .item.xyz img {
   display: block !important;
-  margin: 0 auto !important;
-  margin-bottom: 2em !important;
+  margin: 1em auto !important;
 }
 
 @media (min-width: 900px) {
