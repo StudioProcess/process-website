@@ -426,8 +426,8 @@ body.single-works {
 **/
 img.xyz {
   display: block;
-  margin: 0 auto;
-  margin-bottom: 3em;
+  margin: 60px auto;
+  //margin-bottom: 3em;
 }
 
 .first-image {
@@ -634,7 +634,7 @@ body.page {
    max-height: 85vh;
    min-height: 250px;
    display: block;
-   margin: 0 auto;
+   margin: 60px auto;
   }
   .items .item {
    flex: 1 0 calc(25% - 10px);
