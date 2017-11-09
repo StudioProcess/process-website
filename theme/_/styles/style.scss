@@ -624,7 +624,7 @@ body.page {
    flex-wrap: wrap;
    padding-top: 20px;
    //margin-left: -30px;
-   margin-top: -30px;
+   //margin-top: -30px;
   }
   .items img {
    //margin-top: 50px;
@@ -641,12 +641,14 @@ body.page {
 }
 @media (max-width: 899px) {
  // two columns layout
+ /**
  .items img {
   margin-top: 50px;
  }
  .items .item {
    margin-top: 30px;
  }
+ */
 }
 
 .pace {
