@@ -389,9 +389,9 @@ body.single-works {
    .subtitle { @include font-size($fs-subtitle); text-align: center; font-weight:300;}
 
    .images {
-      img { display:block; margin:0 auto; margin-top:60px; margin-bottom:60px; }
+      img { display:block; margin:0 auto; margin-top:1em; margin-bottom:1em; }
    }
-   .vimeo-outer { margin:0 auto; margin-top:60px; margin-bottom:60px;}
+   .vimeo-outer { margin:0 auto; margin-top:1em; margin-bottom:1em;}
    .text {
      width: 100%;
      max-width:$article-width; margin:0 auto;
@@ -424,10 +424,12 @@ body.single-works {
 /**
 * Spacing for content in "items"-div on content pages
 **/
+/**
 img.xyz {
   display: block !important;
   margin: 3em auto !important;
 }
+*/
 
 .first-image {
   margin-top: 2em;
@@ -613,7 +615,7 @@ body.page {
 
 .item.xyz img {
   display: block !important;
-  margin: 3em auto !important;
+  margin: 1em auto !important;
 }
 
 @media (min-width: 900px) {
@@ -632,7 +634,7 @@ body.page {
    max-height: 85vh;
    min-height: 250px;
    display: block;
-   margin: 60px auto;
+   margin: 1em auto; //60px
   }
   .items .item {
    flex: 1 0 calc(25% - 10px);
