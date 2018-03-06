@@ -410,7 +410,7 @@ body.single-works {
    .credits {
     font-family: "Inconsolata";
     padding-top: 10px;
-    opacity: 0.2;
+    opacity: 0.2 !important;
 
      @include font-size($fs-credits);
      line-height: $line-height-credits;
