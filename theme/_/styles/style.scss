@@ -410,7 +410,7 @@ body.single-works {
    .credits {
     font-family: "Inconsolata";
     padding-top: 10px;
-    opacity: 0.2 !important;
+    opacity: 0.2;
 
      @include font-size($fs-credits);
      line-height: $line-height-credits;
@@ -456,7 +456,9 @@ body.post-type-archive-works, body.archive.tag {
       max-width: 400px;
     }
     .subtitle {
-      visibility: hidden;
+      margin-top: 2px !important;
+      opacity: 0.4;
+      // visibility: hidden;
     }
 }
 
