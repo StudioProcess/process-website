@@ -23,7 +23,7 @@
 
 <article class="description-text-start">
   <p class="big-text-start">
-    Process is a design studio based in Vienna, specializing in generative and interactive design and working in the fields of branding, web, installation and print. As well as traditional graphic design solutions, Process creates and develops highly specialized software that is used as tools for and by clients.
+    Process is a design studio based in Vienna, specializing in generative and interactive design and working in the fields of branding, web, installation and print. As well as traditional graphic design solutions, Process designs and develops highly specialized software that is used as tools for and by clients.
   </p>
 </article>
 
