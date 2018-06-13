@@ -42,9 +42,9 @@
  $font-family-base: "GT America", Helvetica, sans-serif;
  // $font-family-credits: "Inconsolata", Helvetica, sans-serif;
  // $font-family-base: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- $font-size-base: 19;
- $line-height-base: 1.8;
- $line-height-credits: 1.6;
+ $font-size-base: 18;
+ $line-height-base: 1.35; // 1.8
+ $line-height-credits: 1.35;
 
  $fs-menu: 20;
  $fs-footer: 14;
@@ -96,7 +96,7 @@
    //background-color:$text-color;
    //font-family: 'Space Mono', monospace;
    //font-weight: bold;
-   color: $text-color; a { color:$text-color; border-bottom: 2px solid $text-color;}
+   color: $text-color; a { color:$text-color; /*border-bottom: 2px solid $text-color; */}
 }
 
 @mixin invertedBar(){
@@ -184,8 +184,8 @@ nav .lang-menu {
 }
 
 div p em {
-  margin-left: 2.0em;
-  margin-right: 2.0em;
+  // margin-left: 2.0em;
+  // margin-right: 2.0em;
   font-family: "Inconsolata";
 }
 
@@ -365,15 +365,16 @@ body.home, body.archive {
       }
 
      a {
-       font-family: 'Space Mono', monospace;
-       text-decoration: none;
-       border-bottom: 1px solid $text-color;
+       // font-family: 'Space Mono', monospace;
+       text-decoration: underline;
+       // border-bottom: 1px solid $text-color;
      }
      a:hover {
-       font-family: 'Space Mono', monospace;
+       // font-family: 'Space Mono', monospace;
        color: $text-color;
-       font-weight: bold;
-       border-bottom: 2px solid $text-color;
+       text-decoration: underline;
+       // font-weight: bold;
+       // border-bottom: 2px solid $text-color;
      }
    }
 
@@ -396,15 +397,15 @@ body.single-works {
      width: 100%;
      max-width:$article-width; margin:0 auto;
      a {
-       font-family: 'Space Mono', monospace;
-       text-decoration: none;
-       border-bottom: 1px solid $text-color;
+       // font-family: 'Space Mono', monospace;
+       text-decoration: underline;
+       border-bottom: 0px solid $text-color !important;
      }
      a:hover {
-       font-family: 'Space Mono', monospace;
-       font-weight: bold;
-       text-decoration: none;
-       border-bottom: 2px solid $text-color;
+       // font-family: 'Space Mono', monospace;
+       // font-weight: bold;
+       text-decoration: underline;
+       border-bottom: 0px solid $text-color !important;
      }
    }
    .credits {
@@ -484,9 +485,9 @@ body.post-type-archive-works, body.archive.tag {
     text-align: center;
 
     a {
-      font-family: 'Space Mono', monospace;
+      // font-family: 'Space Mono', monospace;
       text-decoration: none;
-      border-bottom: 1px solid $text-color;
+      // border-bottom: 1px solid $text-color;
     }
 
   }
@@ -515,13 +516,13 @@ body.post-type-archive-works, body.archive.tag {
     //font-weight: bold;
     font-size: 23px;
     text-align: center;
-    line-height: 1.6em;
+    line-height: 1.3em;
     margin-bottom: 3em;
   }
   .big-text{
     //@include font-size($fs-title);
     //font-size: 33px;
-    line-height: 1.6em;
+    line-height: 1.3em;
     width: 100%;
     max-width:$article-width;
     margin-top: 1.6em;
@@ -547,7 +548,7 @@ body.post-type-archive-works, body.archive.tag {
     //font-weight: bold;
     font-size: 51px;
     text-align: center;
-    line-height: 1.4em;
+    line-height: 1.2em;
     margin-top: 0;
     padding-left: 1em;
     padding-right: 1em;
@@ -558,7 +559,7 @@ body.post-type-archive-works, body.archive.tag {
   .big-text{
     //@include font-size($fs-title);
     font-size: 33px;
-    line-height: 1.4em;
+    line-height: 1.2em;
     width: 100%;
     max-width:$article-width;
     margin-top: 1.6em;
@@ -576,14 +577,15 @@ body.page {
    article { width: 100%;
    max-width:$article-width; margin:0 auto;
    a {
-     font-family: 'Space Mono', monospace;
-     text-decoration: none;
-     border-bottom: 1px solid $text-color;
+     // font-family: 'Space Mono', monospace;
+     text-decoration: underline;
+     // border-bottom: 1px solid $text-color;
    }
    a:hover {
-     font-family: 'Space Mono', monospace;
-     font-weight: bold;
-     border-bottom: 2px solid $text-color;
+     // font-family: 'Space Mono', monospace;
+     // font-weight: bold;
+     text-decoration: underline;
+     // border-bottom: 2px solid $text-color;
    }
  }
 
@@ -735,6 +737,8 @@ body.single-works {
           text-transform: none;
           @include font-size($fs-subtitle);
           color: $body-bg;
+          text-transform: uppercase;
+          line-height: 20px !important;
         }
         margin: 0 15px;
       }
@@ -744,6 +748,7 @@ body.single-works {
         }
         .title {
           opacity: 1;
+          line-height: 20px !important;
         }
         cursor: pointer;
       }
