@@ -295,9 +295,12 @@ class PrcsSync extends PrcsCredentials {
 
    // get instagram data (json) empty array on failure
    private static function ig_query() {
-      $url = self::IG_URL . '?client_id=' . self::IG_CLIENT_ID;
+      $url = self::IG_URL . '?client_id=' . self::IG_CLIENT_ID . '&access_token=' . self::IG_ACCESS_TOKEN;
       $response = self::curl_get('GET', $url); // instagram response
-      if ($response['http_code'] != 200) return array();
+      if ($response['http_code'] != 200) {
+        self::debug($response);
+        return array();
+      }
       return json_decode( $response['content'] );
    }
 
@@ -381,6 +384,7 @@ class PrcsSync extends PrcsCredentials {
    // get twitter posts
    public static function get_twitter_posts($count=0, $min_time=0, $max_id='') {
       $db = self::db_connect();
+      self::db_errors($db);
       $posts_content = self::db_get_posts($db, self::TABLE_TWITTER, $count, $min_time, $max_id);
       self::db_disconnect($db);
       $posts = array();
@@ -399,7 +403,10 @@ class PrcsSync extends PrcsCredentials {
       // self::debug( self::get_instagram_posts() );
       // self::debug( self::get_instagram_posts() );
 
-      self::sync();
+      $ig = self::ig_query();
+      print_r($ig);
+
+      // self::sync();
    }
 
 }
