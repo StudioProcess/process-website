@@ -7,8 +7,9 @@
     "type": "git",
     "url": "https://github.com/StudioProcess/process-website.git"
   },
-  "author": "Studio Process",
+  "author": "Process Studio",
   "devDependencies": {
+    "bower": "^1.8.4",
     "browser-sync": "^2.17.6",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -35,6 +36,7 @@
   },
   "scripts": {
     "start": "gulp serve",
-    "reinstall": "rm -rf node_modules && npm install"
+    "postinstall": "bower install",
+    "reinstall": "rm -rf bower_components; npm ci"
   }
 }

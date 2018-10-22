@@ -1,7 +1,8 @@
 {
-  "name": "HTML5Blank",
+  "name": "process-website",
   "version": "1.5.0",
-  "author": "Todd Motto",
+  "author": "Process Studio",
+  "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
     "modernizr": "~2.8.3",
