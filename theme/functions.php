@@ -109,10 +109,13 @@ function html5blank_header_scripts()
 // Load HTML5 Blank conditional scripts
 function html5blank_conditional_scripts()
 {
-    if (is_page('pagenamehere')) {
-        // Conditional script(s)
-        wp_register_script('scriptname', get_template_directory_uri() . '/_/scripts/scriptname.js', array('jquery'), '1.0.0');
-        wp_enqueue_script('scriptname');
+    // if (is_page('pagenamehere')) {
+    //     // Conditional script(s)
+    //     wp_register_script('scriptname', get_template_directory_uri() . '/_/scripts/scriptname.js', array('jquery'), '1.0.0');
+    //     wp_enqueue_script('scriptname');
+    // }
+    if (is_single(1439)) { // AI emoji
+      wp_enqueue_script('emoji-map', get_template_directory_uri() . '/_/scripts/dist/emoji-map.min.js', array(), '1.0.0');
     }
 }
 
@@ -264,7 +267,7 @@ function html5blankgravatar ($avatar_defaults)
 
 // Add Actions
 add_action('init', 'html5blank_header_scripts'); // Add Custom Scripts to wp_head
-// add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
+add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditional Page Scripts
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
