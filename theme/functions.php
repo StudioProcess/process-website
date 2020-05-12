@@ -366,6 +366,16 @@ function prcs_hidden_tag($wp_query) {
   if(is_tag()) return;
    if ( $wp_query->is_main_query() && !$wp_query->is_single) {
       $wp_query->set( 'tag__not_in', array(3) ); // 'hidden' tag
+
+
+// show unlimited posts on works archive (visibility is controlled via 'hidden' tag)
+// "Reading Settings / Blog pages show at most" controls number of posts on front page
+add_action("pre_get_posts", "prcs_unlimited_works");
+function prcs_unlimited_works($wp_query) {
+	if (is_admin()) return;
+  if (is_tag()) return;
+   if ( $wp_query->is_main_query() && $wp_query->is_post_type_archive(array('works')) ) {
+      $wp_query->set('posts_per_page', -1);
     }
 }
 
