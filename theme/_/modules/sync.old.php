@@ -8,12 +8,9 @@ class PrcsSync extends PrcsCredentials {
    const TABLE_INSTAGRAM = 'sync_instagram_posts';
    const TABLE_TWITTER = 'sync_twitter_posts';
 
+   const IG_URL = 'https://api.instagram.com/v1/users/2227354795/media/recent';
    const TWI_URL = 'https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=3439338467';
-   
-   const IG_URL = 'https://graph.instagram.com/17841402243858419/media';
-   const IG_AUTH_URL = 'https://api.instagram.com/oauth/authorize';
-   const IG_TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
-   
+
    const TAG = 'studioprocess';
 
 
@@ -60,26 +57,23 @@ class PrcsSync extends PrcsCredentials {
 
    // generic sync function
    private static function db_sync($db, $posts, $table, $option) {
-      self::debug("$table: " . count($posts) . " posts found");
-      
       if ( empty($posts) || sizeof($posts) == 0) return; // no new posts
 
       $ids = array(); // returned ids, quoted etc.
       foreach ($posts as $post) {
          $ids[] = sprintf( "('%s')", $post->id );
       }
+      $min_id = end($posts)->id;
+      $max_id = $posts[0]->id;
       self::debug($ids);
-      // $min_id = end($posts)->id;
-      // $max_id = $posts[0]->id;
-
 
       $query = "BEGIN;" . PHP_EOL; // begin transaction
       // delete posts that are in db but missing from new data
       // TODO : need to sync back a certain time so i have a real min id i can start from looking for deletions
       // $query .= sprintf( "DELETE FROM %s WHERE id > '%s' AND id NOT IN (%s);" . PHP_EOL, $table, $min_id, join(',', $ids) );
-      $query .= sprintf( 'DELETE FROM %s WHERE id NOT IN (%s);' . PHP_EOL, $table, join(',', $ids) );
+      $query .= sprintf( "DELETE FROM %s WHERE id NOT IN (%s);" . PHP_EOL, $table, join(',', $ids) );
       // add or update all posts and track new last_id
-      $insert = 'INSERT INTO %s VALUES (\'%s\', %d, \'%s\') ON DUPLICATE KEY UPDATE id=\'%2$s\', timestamp=%3$d, content=\'%4$s\'; ' . PHP_EOL;
+      $insert = "INSERT INTO %s VALUES ('%s', %d, '%s') ON DUPLICATE KEY UPDATE id='%2\$s', timestamp=%3\$d, content='%4\$s'; " . PHP_EOL;
       $last_id = '';
       foreach($posts as $post) {
          if ( $post->id > $last_id ) $last_id = $post->id; // use highest id
@@ -169,12 +163,12 @@ class PrcsSync extends PrcsCredentials {
        $options = array(
            CURLOPT_RETURNTRANSFER => true,     // return web page
            CURLOPT_HEADER         => false,    // don't return headers
-           // CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+         //   CURLOPT_FOLLOWLOCATION => true,     // follow redirects
            CURLOPT_ENCODING       => "",       // handle all encodings
            CURLOPT_USERAGENT      => "spider", // who am i
            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
            CURLOPT_CONNECTTIMEOUT => 3,      // timeout on connect
-           CURLOPT_TIMEOUT        => 30,      // timeout on response
+           CURLOPT_TIMEOUT        => 3,      // timeout on response
            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
            CURLOPT_SSL_VERIFYPEER => false     // Disabled SSL Cert checks
        );
@@ -258,9 +252,8 @@ class PrcsSync extends PrcsCredentials {
       if ( empty($response) ) return;
       $posts = array();
       foreach ($response as $post) {
-         if ( self::twi_is_tagged($post) ) {
-            $posts[] = self::twi_format_for_db($post);
-         }
+         self::debug($post);
+         if ( self::twi_is_tagged($post) ) $posts[] = self::twi_format_for_db($post);
       }
       return self::db_sync($db, $posts, self::TABLE_TWITTER, 'twi_last_id');
    }
@@ -299,51 +292,10 @@ class PrcsSync extends PrcsCredentials {
    /**
     * INSTAGRAM
     */
-    
-    // check for ig auth code (from url redirect)
-    private static function ig_authcode() {
-      if ( isset($_GET['code']) ) return $_GET['code'];
-      return NULL;
-    }
-    
-    // performs authentication to instagram basic api
-    // if called without authcode (code query parameter) redirects to instagrm oauth login
-    // returns an object with 'access_token' and 'user_id' fields
-    private static function ig_auth() {
-      $code = self::ig_authcode();
-      
-      if (!$code) {
-        // get auth code (via redirect)
-        $url = self::IG_AUTH_URL . '?client_id=' . self::IG_APP_ID . '&redirect_uri=' . self::IG_REDIRECT_URI . '&scope=user_profile,user_media&response_type=code';
-        $response = self::curl_get('GET', $url);
-        if ($response['http_code'] == 301 || $response['http_code'] == 302) {
-          header("Location: " . $response['url']);
-          return;
-        }
-        self::debug($response);
-        return;
-      }
-      // get access token (using auth code)
-      $post_data = "client_id=" . self::IG_APP_ID . "&client_secret=" . self::IG_APP_SECRET . "&grant_type=authorization_code&redirect_uri=" . self::IG_REDIRECT_URI . "&code=" . $code;
-      $response = self::curl_get('POST', self::IG_TOKEN_URL, array(), $post_data);
-      
-      if ($response['http_code'] == 400) {
-        //"error_message": "This authorization code has been used"
-        $path = strtok($_SERVER["REQUEST_URI"], '?'); // path without query string
-        header("Location: https://$_SERVER[HTTP_HOST]$path");
-        return;
-      }
-      
-      if ($response['http_code'] == 200) {
-        return json_decode( $response['content'] );
-      }
-      self::debug($response);
-    }
 
-   
    // get instagram data (json) empty array on failure
-   private static function ig_query($auth) {
-      $url = self::IG_URL . '?access_token=' . $auth->access_token . '&fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp';
+   private static function ig_query() {
+      $url = self::IG_URL . '?client_id=' . self::IG_CLIENT_ID . '&access_token=' . self::IG_ACCESS_TOKEN;
       $response = self::curl_get('GET', $url); // instagram response
       if ($response['http_code'] != 200) {
         self::debug($response);
@@ -351,63 +303,53 @@ class PrcsSync extends PrcsCredentials {
       }
       return json_decode( $response['content'] );
    }
-   
+
    // sync instagram data to db
-   private static function ig_sync($db, $auth) {
-      $response = self::ig_query($auth); // get instagram data
+   private static function ig_sync($db) {
+      // $last_id = self::db_get_option($db, 'ig_last_id'); // get id of last synced post
+      // self::debug($last_id);
+      $response = self::ig_query(); // get twitter data
       $posts = array();
       if ( empty($response) ) return;
       foreach ($response->data as $post) {
          if ( self::ig_is_tagged($post) ) $posts[] = self::ig_format_for_db($post);
       }
-      // print_r($posts);
       return self::db_sync($db, $posts, self::TABLE_INSTAGRAM, 'ig_last_id');
    }
 
    // check wheter an instagram post is tagged
    private static function ig_is_tagged($post) {
-     return strpos( strtolower($post->caption), '#' . strtolower(self::TAG) ); // returns false if not found
+      foreach ($post->tags as $tag) {
+         if (strtolower($tag) == strtolower(self::TAG)) return true;
+      }
+      return false;
    }
-   
+
    // format instagram data for syncing to the database (extract id and timestamp)
    private static function ig_format_for_db($post) {
       return (object)array(
          'id' => $post->id,
-         'timestamp' => strtotime($post->timestamp), # iso time string to unix timestamp
-         'content' => json_encode($post)
-      );
-   }
-   
-   // format instagram post (legacy)
-   private static function ig_format_for_wp_legacy($post) {
-      return (object)array(
-         'id' => $post->id,
-         'service' => 'instagram',
-         'version' => 'legacy', // version info
          'timestamp' => $post->created_time,
-         'text' => self::remove_tag( $post->caption->text ),
-         'type' => strtoupper($post->type), // IMAGE, VIDEO
-         'image' => $post->images->standard_resolution->url,
-         'video' => $post->videos ? $post->videos->standard_resolution->url : "",
-         'link' => $post->link
+         'content' => json_encode($post)
       );
    }
 
    // format instagram post json and extrac relevant properties
    private static function ig_format_for_wp($post_json) {
       $post = json_decode($post_json);
-      if (property_exists($post, 'created_time')) return self::ig_format_for_wp_legacy($post); # created_time is only on legacy api data
+      $video = $post->videos ? $post->videos : (object)array();
       return (object)array(
          'id' => $post->id,
          'service' => 'instagram',
-         'timestamp' => strtotime($post->timestamp), // unix timestamp
-         'text' => self::remove_tag( $post->caption ),
-         'type' => $post->media_type, // IMAGE, CAROUSEL_ALBUM, VIDEO
-         'image' => $post->media_type == 'VIDEO' ? $post->thumbnail_url: $post->media_url,
-         'video' => $post->media_type == 'VIDEO' ? $post->media_url: "", // video url or empty string
-         'link' => $post->permalink
+         'timestamp' => $post->created_time,
+         'text' => self::remove_tag( $post->caption->text ),
+         'type' => $post->type,
+         'image' => $post->images->standard_resolution,
+         'video' => $video,
+         'link' => $post->link
       );
    }
+
 
 
    /**
@@ -421,13 +363,13 @@ class PrcsSync extends PrcsCredentials {
 
    // get new posts from instagram and twitter and store in db
    public static function sync() {
-      $auth = self::ig_auth();
       $db = self::db_connect();
-      self::ig_sync($db, $auth);
+      self::ig_sync($db);
       self::twi_sync($db);
       self::db_disconnect($db);
    }
-   
+
+   // get instagram posts
    public static function get_instagram_posts($count=0, $min_time=0, $max_id='') {
       $db = self::db_connect();
       $posts_content = self::db_get_posts($db, self::TABLE_INSTAGRAM, $count, $min_time, $max_id);
@@ -461,23 +403,10 @@ class PrcsSync extends PrcsCredentials {
       // self::debug( self::get_instagram_posts() );
       // self::debug( self::get_instagram_posts() );
 
-      // $ig = self::ig_query();
-      // print_r($ig);
+      $ig = self::ig_query();
+      print_r($ig);
 
       // self::sync();
-      
-      // $res = self::ig_query($auth);
-      // print_r($res);
-      
-      // self::ig_sync(NULL, $auth);
-      
-      $auth = self::ig_auth();
-      // print_r($auth);
-      $db = self::db_connect();
-      $res_ig = self::ig_sync($db, $auth);
-      // print_r($res_ig);
-      // self::twi_sync($db);
-      self::db_disconnect($db);
    }
 
 }

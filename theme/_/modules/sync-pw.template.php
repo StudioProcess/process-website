@@ -5,8 +5,10 @@
       const SQL_USER = '';
       const SQL_PASS = '';
 
-      const IG_CLIENT_ID = '';
-      const IG_ACCESS_TOKEN = '';
+      const IG_APP_ID = '';
+      const IG_APP_SECRET = '';
+      const IG_REDIRECT_URI = '';
+      
       const TWI_KEY = '';
       const TWI_SECRET = '';
    }
