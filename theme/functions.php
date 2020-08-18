@@ -363,10 +363,11 @@ function prcs_custom_front_page($wp_query) {
 add_action("pre_get_posts", "prcs_hidden_tag");
 function prcs_hidden_tag($wp_query) {
 	if (is_admin()) return;
-  if(is_tag()) return;
-   if ( $wp_query->is_main_query() && !$wp_query->is_single) {
-      $wp_query->set( 'tag__not_in', array(3) ); // 'hidden' tag
-
+  if (is_tag()) return;
+    if ( $wp_query->is_main_query() && !$wp_query->is_single ) {
+        $wp_query->set( 'tag__not_in', array(3) ); // 'hidden' tag
+    }
+}
 
 // show unlimited posts on works archive (visibility is controlled via 'hidden' tag)
 // "Reading Settings / Blog pages show at most" controls number of posts on front page
@@ -601,3 +602,18 @@ function disable_wp_emojicons() {
   add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
 }
 add_action( 'init', 'disable_wp_emojicons' );
+
+
+/*------------------------------------*\
+   remove unwanted routes
+\*------------------------------------*/
+/* Register template redirect action callback */
+add_action('template_redirect', 'prcs_remove_wp_archives');
+ 
+/* Remove archives (except tag) and media attachment pages */
+function prcs_remove_wp_archives() {
+  if( is_category() || is_date() || is_author() || is_attachment() ) {
+    wp_redirect( get_option('home'), 301); 
+    exit;
+  }
+}
