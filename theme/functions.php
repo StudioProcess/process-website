@@ -613,7 +613,7 @@ add_action('template_redirect', 'prcs_remove_wp_archives');
 /* Remove archives (except tag) and media attachment pages */
 function prcs_remove_wp_archives() {
   if( is_category() || is_date() || is_author() || is_attachment() ) {
-    wp_redirect( get_option('home'), 301); 
+    wp_redirect( home_url(), 301); 
     exit;
   }
 }
