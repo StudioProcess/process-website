@@ -8,6 +8,7 @@ class PrcsSync extends PrcsCredentials {
    const TABLE_INSTAGRAM = 'sync_instagram_posts';
    const TABLE_TWITTER = 'sync_twitter_posts';
 
+   const IG_URL_OLD = 'https://api.instagram.com/v1/users/2227354795/media/recent';
    const TWI_URL = 'https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=3439338467';
    
    const IG_URL = 'https://graph.instagram.com/17841402243858419/media';
