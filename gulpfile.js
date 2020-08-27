@@ -56,6 +56,7 @@ var srcPath = function(name) {
       glob = [glob];
    }
    return glob.map(function (el) {
+      if (el.startsWith('!')) return  joinPath('!' + config.basePath, el.substring(1));
       return joinPath(config.basePath, el);
    });
 };

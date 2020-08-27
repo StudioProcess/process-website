@@ -14,7 +14,7 @@
 			"dest" : "_/styles/dist/"
 		},
 		"scripts" : {
-			"src" : "_/scripts/*.js",
+			"src" : ["_/scripts/*.js", "!_/scripts/*.min.js"],
 			"dest" : "_/scripts/dist/"
 		}
 	}
