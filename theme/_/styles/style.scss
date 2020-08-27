@@ -5,33 +5,54 @@
  */
 
 
- /**
-  * Fonts
-  */
-   @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,500italic,400italic);
-   //@import url(https://fonts.googleapis.com/css?family=Karla:400,700,400italic);
-   @import url(https://fonts.googleapis.com/css?family=Inconsolata);
-   @import url(https://fonts.googleapis.com/css?family=Space+Mono:400,700);
+/**
+* Fonts
+*/
+  // Inconsolata
+  @font-face {
+    font-family: 'Inconsolata';
+    src: url('../../fonts/Inconsolata-Regular.woff2') format('woff2'),
+         url('../../fonts/Inconsolata-Regular.woff') format('woff'),
+         url('../../fonts/Inconsolata-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  // Space Mono
+  @font-face {
+    font-family: 'Space Mono';
+    src: url('../../fonts/SpaceMono-Regular.woff2') format('woff2'),
+         url('../../fonts/SpaceMono-Regular.woff') format('woff'),
+         url('../../fonts/SpaceMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Space Mono';
+    src: url('../../fonts/SpaceMono-Bold.woff2') format('woff2'),
+         url('../../fonts/SpaceMono-Bold.woff') format('woff'),
+         url('../../fonts/SpaceMono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
 
-  /** Regular **/
-   @font-face {
+  // GT America
+  @font-face {
     font-family: 'GT America';
     src: url('../../fonts/GT-America-Standard-Regular.eot');
     src: url('../../fonts/GT-America-Standard-Regular.woff') format('woff'),
          url('../../fonts/GT-America-Standard-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-    }
-
-    /** Bold **/
-    @font-face {
+  }
+  @font-face {
      font-family: 'GT America';
      src: url('../../fonts/GT-America-Standard-Bold.eot');
      src: url('../../fonts/GT-America-Standard-Bold.woff') format('woff'),
           url('../../fonts/GT-America-Standard-Bold.ttf') format('truetype');
      font-weight: bold;
      font-style: normal;
-     }
+   }
 
  /**
   * Variables
