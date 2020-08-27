@@ -37,8 +37,11 @@
   },
   "scripts": {
     "start": "gulp serve",
-    "postinstall": "bower install",
-    "reinstall": "rm -rf bower_components; npm ci"
+    "bowerinstall": "bower install",
+    "reinstall": "rm -rf node_modules; npm install",
+    "build": "gulp build",
+    "build:styles": "gulp styles",
+    "build:scripts": "gulp scripts"
   },
   "dependencies": {}
 }
