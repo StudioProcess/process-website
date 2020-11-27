@@ -28,5 +28,5 @@
 </article>
 
 <article class="featured-stream">
-  This is a stream of instagram images, tweets and finished projects. View finished &#8594; <a href="/works/">Works</a> only and more information about the &#8594; <a href="/about/">Studio</a>.
+  This is a stream of instagram images and finished projects. We're selling fine art prints of our work through our &#8594; <a href="https://process.gallery">Gallery</a>.
 </article>
