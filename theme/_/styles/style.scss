@@ -187,7 +187,7 @@ nav .lang-menu {
           //font-family: "Inconsolata";
           font-family: 'Space Mono', monospace;
 
-          font-size: 18px;
+          font-size: 14px;
           letter-spacing: 1px;
           text-transform: uppercase;
           font-weight: bold;
@@ -195,7 +195,7 @@ nav .lang-menu {
           li { display: inline-block;
             &:before { content:'— '; }
             &:first-child:before { display:none; }
-            a { text-decoration:none; padding: 0 0.25em;
+            a { text-decoration:none; padding: 0 0.15em;
                 &:hover { @include inverted(); }
             }
             &.current-menu-item a { @include inverted(); }
