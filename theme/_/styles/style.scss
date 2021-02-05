@@ -280,7 +280,7 @@ body.home, body.archive {
       }
       .subtitle { @include font-size($fs-archive-subtitle); font-weight:normal;
          margin:0;
-         margin-top:0.8em;
+         margin-top:0.2em;
          p { margin:0; }
       }
       a { font-family: "GT America", Helvetica, sans-serif; text-decoration: none; }//'Space Mono', monospace; text-decoration: none; }
@@ -293,6 +293,12 @@ body.home, body.archive {
 .work-container {
    flex-basis: 100%;
    text-align:center;
+}
+
+body.home article a {
+  img {
+    min-wdith: 800px !important;
+  }
 }
 
 
@@ -315,6 +321,7 @@ body.home, body.archive {
       }
       .subtitle2 {
         display: block;
+        text-transform: none;
         margin-top:1.3em;
         margin-bottom:1.3em;
       }
@@ -407,8 +414,8 @@ body.home, body.archive {
  * Single WORK
  */
 body.single-works {
-   .title { @include font-size($fs-title); text-align: center; font-weight:700; text-transform: uppercase; letter-spacing: 1px;}
-   .subtitle { @include font-size($fs-subtitle); text-align: center; font-weight:300;}
+   .title { @include font-size($fs-title); text-align: center; font-weight:500; }
+   .subtitle { @include font-size($fs-subtitle); text-align: center; font-weight:300; margin-top: -12px; }
 
    .images {
       img { display:block; margin:0 auto; margin-top:1em; margin-bottom:1em; }
@@ -475,11 +482,11 @@ body.post-type-archive-works, body.archive.tag {
     }
     .work-container {
       flex-basis: initial;
-      max-width: 400px;
+      max-width: 600px;
     }
     .subtitle {
       margin-top: 4px !important;
-      opacity: 0.4;
+      opacity: 1.0;
       // visibility: hidden;
     }
 }
