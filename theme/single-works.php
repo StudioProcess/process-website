@@ -100,9 +100,9 @@
 			) );
 
 			// The Loop
-			while ( have_posts() ) : the_post(); ?>
-				<?php get_template_part('card-work') ?>
-			<? endwhile;
+			while ( have_posts() ) : the_post();
+				get_template_part('card-work');
+			endwhile;
 
 			// Reset Query
 			wp_reset_query();
