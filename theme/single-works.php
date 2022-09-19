@@ -33,8 +33,8 @@
 			</section>
 
 			<style>
-			<? $fg = types_render_field('foreground-color-post', array()); ?>
-			<? $bg = types_render_field('background-color-post', array()); ?>
+			<?php $fg = types_render_field('foreground-color-post', array()); ?>
+			<?php $bg = types_render_field('background-color-post', array()); ?>
 			body {
 				background-color: <?php echo $bg; ?>;
 				color: <?php echo $fg; ?>;
