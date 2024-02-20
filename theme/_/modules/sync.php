@@ -16,7 +16,9 @@ class PrcsSync extends PrcsCredentials {
    const IG_TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
    
    const TAG = 'studioprocess';
-
+   
+   const DOWNLOAD_IG_MEDIA = true;
+   const IG_MEDIA_DIR = "wp-content/ig_media";
 
 
    /**
@@ -158,8 +160,8 @@ class PrcsSync extends PrcsCredentials {
    }
 
     // debug print something
-    private static function debug($thing) {
-      if (!self::$debug) return;
+    private static function debug($thing, $force=false) {
+      if (!self::$debug && !$force) return;
       echo '<pre>';
       print_r($thing);
       echo '</pre>';
@@ -207,7 +209,39 @@ class PrcsSync extends PrcsCredentials {
        $header['content'] = $content;
        return $header;
    }
-
+   
+   // returns true on successful download and save
+   // otherwise returns false
+   private static function curl_download( $url, $filename ) {
+      $filename = $_SERVER["DOCUMENT_ROOT"] . "/" . $filename;
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+      $raw = curl_exec($ch);
+      if ($raw === false) return false;
+      curl_close($ch);
+      if (file_exists($filename)) {
+         unlink($filename);
+      }
+      $fp = fopen($filename, 'x');
+      if ($fp === false) return false;
+      $res = fwrite($fp, $raw);
+      if ($res === false) return false;
+      $res = fclose($fp);
+      if ($res === false) return false;
+      return true;
+   }
+   
+   // returns true if folder was created
+   private static function ensure_folder_exists($folder) {
+      $folder = $_SERVER["DOCUMENT_ROOT"] . "/" . $folder;
+      if ( !file_exists($folder) ) {
+         return mkdir($folder, 0755, true);
+      }
+      return false;
+   }
+   
    // removes the hash tag from a string
    private static function remove_tag($str) {
       $pattern = '|\s*#'. self::TAG .'\s*|i';
@@ -353,13 +387,42 @@ class PrcsSync extends PrcsCredentials {
       return json_decode( $response['content'] );
    }
    
+   // returns an array mapping post id to saved file urls
+   private static function ig_download_media($post_json) {
+      $out = array();
+      self::ensure_folder_exists(self::IG_MEDIA_DIR);
+      foreach ($post_json as $post) {
+         if ( self::ig_is_tagged($post) ) {
+            $ext = pathinfo(parse_url($post->media_url, PHP_URL_PATH), PATHINFO_EXTENSION);
+            $filename = self::IG_MEDIA_DIR . "/" . $post->id . "." . $ext;
+            $res = self::curl_download( $post->media_url, $filename );
+            if ($res) $out[$post->id] = $filename;
+         }
+      }
+      return $out;
+   }
+   
    // sync instagram data to db
    private static function ig_sync($db, $auth) {
       $response = self::ig_query($auth); // get instagram data
       $posts = array();
       if ( empty($response) ) return;
+      
+      $downloaded_media = array();
+      if (self::DOWNLOAD_IG_MEDIA) {
+         $downloaded_media = self::ig_download_media($response->data);
+         self::debug($downloaded_media);
+      }
+      
       foreach ($response->data as $post) {
-         if ( self::ig_is_tagged($post) ) $posts[] = self::ig_format_for_db($post);
+         if ( self::ig_is_tagged($post) ) {
+            if (array_key_exists($post->id, $downloaded_media)) {
+               $post = (array)$post;
+               $post['_downloaded_media_url'] = $downloaded_media[$post['id']];
+               $post = (object)$post;
+            }
+            $posts[] = self::ig_format_for_db($post);
+         }
       }
       // print_r($posts);
       return self::db_sync($db, $posts, self::TABLE_INSTAGRAM, 'ig_last_id');
@@ -398,14 +461,19 @@ class PrcsSync extends PrcsCredentials {
    private static function ig_format_for_wp($post_json) {
       $post = json_decode($post_json);
       if (property_exists($post, 'created_time')) return self::ig_format_for_wp_legacy($post); # created_time is only on legacy api data
+         
+      $media_url = $post->media_url;
+      if (self::DOWNLOAD_IG_MEDIA && property_exists($post, "_downloaded_media_url")) {
+         $media_url = $post->_downloaded_media_url;
+      }
       return (object)array(
          'id' => $post->id,
          'service' => 'instagram',
          'timestamp' => strtotime($post->timestamp), // unix timestamp
          'text' => self::remove_tag( $post->caption ),
          'type' => $post->media_type, // IMAGE, CAROUSEL_ALBUM, VIDEO
-         'image' => $post->media_type == 'VIDEO' ? $post->thumbnail_url: $post->media_url,
-         'video' => $post->media_type == 'VIDEO' ? $post->media_url: "", // video url or empty string
+         'image' => $post->media_type == 'VIDEO' ? $post->thumbnail_url : $media_url,
+         'video' => $post->media_type == 'VIDEO' ? $media_url : "", // video url or empty string
          'link' => $post->permalink
       );
    }
