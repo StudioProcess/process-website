@@ -63,7 +63,7 @@ class PrcsSync extends PrcsCredentials {
 
    // generic sync function
    private static function db_sync($db, $posts, $table, $option) {
-      self::debug("$table: " . count($posts) . " posts found");
+      self::debug("db sync (table " . $table . "): " . count($posts) . " posts found");
       
       if ( empty($posts) || sizeof($posts) == 0) return; // no new posts
 
@@ -92,7 +92,8 @@ class PrcsSync extends PrcsCredentials {
          $query .= self::db_set_option_sql($option, $last_id);
       }
       $query .= "COMMIT;"; // end transaction
-
+      
+      self::debug("db query:");
       self::debug($query);
       $db->multi_query($query);
       self::db_process_results($db, true);
@@ -372,6 +373,7 @@ class PrcsSync extends PrcsCredentials {
       if ($response['http_code'] == 200) {
         return json_decode( $response['content'] );
       }
+      self::debug("IG auth response:");
       self::debug($response);
     }
 
@@ -393,9 +395,11 @@ class PrcsSync extends PrcsCredentials {
       self::ensure_folder_exists(self::IG_MEDIA_DIR);
       foreach ($post_json as $post) {
          if ( self::ig_is_tagged($post) ) {
-            $ext = pathinfo(parse_url($post->media_url, PHP_URL_PATH), PATHINFO_EXTENSION);
+            $media_url = $post->media_url;
+            if ($post->media_type == "VIDEO") $media_url = $post->thumbnail_url; // for videos: download thumbnail image
+            $ext = pathinfo(parse_url($media_url, PHP_URL_PATH), PATHINFO_EXTENSION);
             $filename = self::IG_MEDIA_DIR . "/" . $post->id . "." . $ext;
-            $res = self::curl_download( $post->media_url, $filename );
+            $res = self::curl_download( $media_url, $filename );
             if ($res) $out[$post->id] = $filename;
          }
       }
@@ -411,6 +415,7 @@ class PrcsSync extends PrcsCredentials {
       $downloaded_media = array();
       if (self::DOWNLOAD_IG_MEDIA) {
          $downloaded_media = self::ig_download_media($response->data);
+         self::debug("IG downloaded media:");
          self::debug($downloaded_media);
       }
       
@@ -462,17 +467,18 @@ class PrcsSync extends PrcsCredentials {
       $post = json_decode($post_json);
       if (property_exists($post, 'created_time')) return self::ig_format_for_wp_legacy($post); # created_time is only on legacy api data
          
-      $media_url = $post->media_url;
+      $image_url = $post->media_type == 'VIDEO' ? $post->thumbnail_url : $media_url;
       if (self::DOWNLOAD_IG_MEDIA && property_exists($post, "_downloaded_media_url")) {
-         $media_url = $post->_downloaded_media_url;
+         $image_url = $post->_downloaded_media_url;
       }
+      
       return (object)array(
          'id' => $post->id,
          'service' => 'instagram',
          'timestamp' => strtotime($post->timestamp), // unix timestamp
          'text' => self::remove_tag( $post->caption ),
          'type' => $post->media_type, // IMAGE, CAROUSEL_ALBUM, VIDEO
-         'image' => $post->media_type == 'VIDEO' ? $post->thumbnail_url : $media_url,
+         'image' => $image_url,
          'video' => $post->media_type == 'VIDEO' ? $media_url : "", // video url or empty string
          'link' => $post->permalink
       );
@@ -490,6 +496,7 @@ class PrcsSync extends PrcsCredentials {
 
    // get new posts from instagram and twitter and store in db
    public static function sync() {
+      self::debug("sync() called");
       $auth = self::ig_auth();
       $db = self::db_connect();
       self::ig_sync($db, $auth);
